@@ -453,34 +453,6 @@ button {
   padding: 96px var(--gutter) 0;
 }
 
-.work__bar {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
-  align-items: center;
-  padding-bottom: 14px;
-  border-bottom: 1px solid var(--line);
-}
-
-.status {
-  display: flex;
-  align-items: center;
-  gap: 9px;
-  font-family: var(--mono);
-  font-size: 9.5px;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: var(--ink-mute);
-}
-
-.status__dot {
-  width: 7px;
-  height: 7px;
-  border-radius: 50%;
-  background: var(--ok);
-  box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.18);
-}
-
 /* ---------------------------------------------------------------- project cards
    Archival Swiss, matching flowly.org.uk: zero radius, zero shadow, hairline
    grid, Syne heads, JetBrains Mono labels, #002AFF accent. Scoped to the cards
@@ -501,7 +473,7 @@ button {
   display: grid;
   grid-template-columns: 1fr;
   gap: 0;
-  margin-top: 40px;
+  margin-top: 0;
 }
 
 :root[data-theme="dark"] .cards {
