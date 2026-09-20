@@ -1,0 +1,723 @@
+<!DOCTYPE html>
+
+<html class="scroll-smooth" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Matthew Chudnovski — Full-stack Marketing &amp; Creative Director</title>
+<!-- Google Fonts: Inter and Plus Jakarta Sans -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&amp;family=Space+Grotesk:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS v3 CDN with Plugins -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['"Plus Jakarta Sans"', 'system-ui', 'sans-serif'],
+            mono: ['"Space Grotesk"', 'monospace'],
+          },
+          colors: {
+            brand: {
+              bgLight: '#ededeb',
+              bgLightSecondary: '#f7f7f5',
+              borderLight: 'rgba(0, 0, 0, 0.08)',
+              darkBg: '#0e0e11',
+              darkCard: '#16161c',
+              darkBorder: 'rgba(255, 255, 255, 0.09)'
+            }
+          },
+          boxShadow: {
+            'dock': '0 20px 40px -10px rgba(0,0,0,0.12), 0 0 0 1px rgba(0,0,0,0.06), inset 0 1px 1px rgba(255,255,255,0.7)',
+            'dock-dark': '0 25px 50px -12px rgba(0,0,0,0.6), 0 0 0 1px rgba(255,255,255,0.08), inset 0 1px 1px rgba(255,255,255,0.1)',
+            'pill': '0 8px 24px -4px rgba(0,0,0,0.06), 0 0 0 1px rgba(0,0,0,0.05)',
+            'card-soft': '0 12px 32px -8px rgba(0,0,0,0.04), 0 0 0 1px rgba(0,0,0,0.04)',
+          }
+        }
+      }
+    }
+  </script>
+<!-- BEGIN: Custom Styles -->
+<style data-purpose="custom-layout">
+    body {
+      background: radial-gradient(circle at 50% 15%, #f6f6f4 0%, #ebebea 60%, #e2e2df 100%);
+      min-height: 100vh;
+      transition: background-color 0.4s ease, color 0.4s ease;
+    }
+    .dark body {
+      background: radial-gradient(circle at 50% 15%, #18181f 0%, #101015 65%, #09090c 100%);
+    }
+
+    /* Subtle Glassmorphism utilities */
+    .glass-pill {
+      background: rgba(255, 255, 255, 0.68);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+    }
+    .dark .glass-pill {
+      background: rgba(22, 22, 28, 0.72);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+    }
+
+    .glass-dock {
+      background: rgba(250, 250, 249, 0.75);
+      backdrop-filter: blur(24px) saturate(180%);
+      -webkit-backdrop-filter: blur(24px) saturate(180%);
+      border: 1px solid rgba(255, 255, 255, 0.85);
+      box-shadow: 0 20px 48px -12px rgba(0, 0, 0, 0.16), 0 2px 6px rgba(0, 0, 0, 0.04), inset 0 1px 0 rgba(255, 255, 255, 0.9);
+    }
+    .dark .glass-dock {
+      background: rgba(22, 22, 28, 0.78);
+      backdrop-filter: blur(24px) saturate(180%);
+      -webkit-backdrop-filter: blur(24px) saturate(180%);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      box-shadow: 0 25px 60px -15px rgba(0, 0, 0, 0.65), inset 0 1px 0 rgba(255, 255, 255, 0.15);
+    }
+
+    /* Tooltip animations */
+    .dock-item:hover .dock-tooltip {
+      opacity: 1;
+      transform: translate(-50%, -10px);
+      pointer-events: auto;
+    }
+
+    /* Custom subtle pulse */
+    @keyframes pulse-subtle {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.65; transform: scale(0.96); }
+    }
+    .animate-pulse-subtle {
+      animation: pulse-subtle 3s ease-in-out infinite;
+    }
+  </style>
+<!-- END: Custom Styles -->
+</head>
+<body class="text-neutral-800 dark:text-neutral-100 font-sans antialiased selection:bg-neutral-800 selection:text-white dark:selection:bg-white dark:selection:text-neutral-900 pb-36">
+<!-- BEGIN: TopFloatingNav -->
+<!-- Top navigation capsule matching visual reference -->
+<header class="fixed top-6 inset-x-0 z-40 flex justify-center px-4 pointer-events-none" data-purpose="floating-header">
+<nav class="pointer-events-auto inline-flex items-center gap-2.5 px-4 py-2 rounded-full glass-pill border border-black/10 dark:border-white/10 shadow-pill transition-all duration-300 hover:border-black/20 dark:hover:border-white/20">
+<!-- Theme Toggle (Sun / Moon) -->
+<button aria-label="Toggle Color Theme" class="p-1 rounded-full text-neutral-600 hover:text-black dark:text-neutral-400 dark:hover:text-white transition-colors" id="themeToggleBtn" type="button">
+<!-- Sun Icon -->
+<svg class="w-3.5 h-3.5 block dark:hidden" fill="none" id="sunIcon" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24">
+<circle cx="12" cy="12" r="4"></circle>
+<path d="M12 2v2"></path>
+<path d="M12 20v2"></path>
+<path d="m4.93 4.93 1.41 1.41"></path>
+<path d="m17.66 17.66 1.41 1.41"></path>
+<path d="M2 12h2"></path>
+<path d="M20 12h2"></path>
+<path d="m6.34 17.66-1.41 1.41"></path>
+<path d="m19.07 4.93-1.41 1.41"></path>
+</svg>
+<!-- Moon Icon -->
+<svg class="w-3.5 h-3.5 hidden dark:block" fill="none" id="moonIcon" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24">
+<path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"></path>
+</svg>
+</button>
+<!-- Vertical Divider -->
+<span aria-hidden="true" class="w-px h-3.5 bg-neutral-300 dark:bg-neutral-700"></span>
+<!-- Ambient Audio / Visualizer Play-Pause Button -->
+<button aria-label="Play ambient focus audio" class="flex items-center text-neutral-600 hover:text-black dark:text-neutral-400 dark:hover:text-white p-1 transition-colors" id="ambientSoundBtn" type="button">
+<svg class="w-3 h-3 translate-x-0.5" fill="currentColor" id="playIcon" viewbox="0 0 24 24">
+<polygon points="6 3 20 12 6 21 6 3"></polygon>
+</svg>
+<svg class="w-3 h-3 hidden" fill="currentColor" id="pauseIcon" viewbox="0 0 24 24">
+<rect height="16" width="4" x="6" y="4"></rect>
+<rect height="16" width="4" x="14" y="4"></rect>
+</svg>
+</button>
+<!-- Vertical Divider -->
+<span aria-hidden="true" class="w-px h-3.5 bg-neutral-300 dark:bg-neutral-700"></span>
+<!-- 'about' Link Trigger -->
+<button class="text-xs font-normal tracking-wide text-neutral-700 hover:text-black dark:text-neutral-300 dark:hover:text-white px-1 py-0.5 transition-colors" id="openAboutBtn" type="button">
+        about
+      </button>
+</nav>
+</header>
+<!-- END: TopFloatingNav -->
+<!-- BEGIN: HeroSection -->
+<main class="relative z-10 pt-28 sm:pt-36 lg:pt-40 max-w-5xl mx-auto px-6 text-center">
+<!-- Center Avatar Circle matching reference -->
+<div class="flex flex-col items-center justify-center mb-4" data-purpose="author-profile">
+<div class="relative w-24 h-24 sm:w-28 sm:h-28 rounded-full overflow-hidden p-1 bg-gradient-to-b from-white/90 to-white/40 dark:from-neutral-700 dark:to-neutral-900 shadow-md ring-1 ring-black/5 dark:ring-white/10 group">
+<!-- Grayscale portrait image matching visual reference https://lh3.googleusercontent.com/aida-public/AB6AXuDe4waJNYb4BC11_IMS_CdOqYh2HphxRU-sdgikt6SU2ZCfbJE08EARakbb7OQS5PkT-t3bab1GxsNis_gz3zOOPZiovN9MqDM4okbRV-Wf5PgQQcn-3XFPtL0YzKztAj_C0Wn9aKDsu3a0WL6c-b40MyujEhtTJ_7wTc33U7dTKAGQuC90uS-qSj4mMu6H97d9ZRTIU0-RnN2MMFR_gk94oAazy-sCDzDWT93YY5vWAfAI5_26-sGxf7w2SdIrULIgbFI -->
+<div class="w-full h-full rounded-full overflow-hidden bg-neutral-200 dark:bg-neutral-800 flex items-center justify-center">
+<img alt="Matthew Chudnovski - Creative Director" class="w-full h-full object-cover grayscale contrast-110 group-hover:scale-105 transition-transform duration-500" loading="eager" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDI6fF6qV3OzXmXBGTHKTqh6nZA7_irEfGFEFg7Qn3z39ercOAIKf40M3vSFdj67n12snoJCAXkly_Zo4Axol_ZSFCBxBvjpc7YmMV0SJv3pAZEMxeRML_ywqugfvh1n5aeEQ3kdH-rSK1GTreMgQCpBSTyx4-dKoclrtPiwwTdV-VXLDMazT9gqXQsVCWQHHs5P-pqpRaS_aewXwUXQfjNFs1uc8rLMsTojdoqO5y2_jgOgrTKBeiteA"/>
+</div>
+</div>
+<!-- Author Name Label -->
+<h2 class="mt-4 text-[17px] sm:text-[18px] font-normal tracking-[-0.01em] text-neutral-800 dark:text-neutral-200">
+        Matthew Chudnovski
+      </h2>
+</div>
+<!-- Grand Center Title with Custom Layer Stack Icon matching https://lh3.googleusercontent.com/aida-public/AB6AXuB5YQRzSCXjZFNgODGVOnae2oySHwaY1ANb4qfEvt7TTI7ZAzvm16A3CxTk_CQibThD0NH9UpOajMl1gJaGUfM60ZnPuT4NjHSQrVaW442NuFt52BbqsxNbPwRNfZ0yBqj1e6Aq9ZvrUeKcUQ-iax4j3AjwPMu7ke2uAi6rcPR-h_oaJ1nQDM4R39g2JfcC_dIsgMAVozFfBkcpZW28WLKDMZKgZsVyDv4_KtIZlzU4gHZCg82Kr9yuysZJERXw4FKpKDo -->
+<div class="mt-3 max-w-4xl mx-auto" data-purpose="primary-statement">
+<h1 class="text-4xl sm:text-6xl md:text-7xl font-light tracking-[-0.035em] text-neutral-900 dark:text-neutral-50 leading-[1.08] sm:leading-[1.08]">
+<span>Full–stack</span>
+<!-- Inline Custom Layer Stack Icon -->
+<span aria-hidden="true" class="inline-flex align-middle mx-1 sm:mx-2 -translate-y-1.5 sm:-translate-y-2 text-neutral-900 dark:text-white">
+<svg class="w-8 h-8 sm:w-12 sm:h-12 md:w-14 md:h-14" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.6" viewbox="0 0 48 48">
+<!-- Top Layer -->
+<path d="M24 10L6 19L24 28L42 19L24 10Z"></path>
+<!-- Middle Layer -->
+<path d="M6 26L24 35L42 26"></path>
+<!-- Bottom Layer -->
+<path d="M6 33L24 42L42 33"></path>
+<!-- Small plus accent on top right edge -->
+<path d="M38 10V14" stroke-width="2.2"></path>
+<path d="M36 12H40" stroke-width="2.2"></path>
+</svg>
+</span>
+<span>marketing</span>
+<br/>
+<span class="font-normal">&amp; creative director</span>
+</h1>
+<!-- Positioning Subtitle -->
+<p class="mt-6 text-base sm:text-lg text-neutral-600 dark:text-neutral-400 font-light max-w-2xl mx-auto leading-relaxed">
+        Orchestrating autonomous AI workflows, executive brand narratives, and conversion architectures for forward-leaning ventures.
+      </p>
+<!-- Category Filter Pills matching dock actions -->
+<div class="mt-8 flex flex-wrap items-center justify-center gap-2" data-purpose="filter-pills">
+<button class="filter-tag active px-3.5 py-1.5 text-xs font-medium rounded-full bg-neutral-900 text-white dark:bg-white dark:text-neutral-900 transition-all shadow-sm" data-filter="all">
+          All Works
+        </button>
+<button class="filter-tag px-3.5 py-1.5 text-xs font-medium rounded-full bg-black/5 hover:bg-black/10 dark:bg-white/5 dark:hover:bg-white/10 text-neutral-700 dark:text-neutral-300 transition-all" data-filter="ai-systems">
+          AI &amp; Automation
+        </button>
+<button class="filter-tag px-3.5 py-1.5 text-xs font-medium rounded-full bg-black/5 hover:bg-black/10 dark:bg-white/5 dark:hover:bg-white/10 text-neutral-700 dark:text-neutral-300 transition-all" data-filter="creative-dir">
+          Creative Direction
+        </button>
+<button class="filter-tag px-3.5 py-1.5 text-xs font-medium rounded-full bg-black/5 hover:bg-black/10 dark:bg-white/5 dark:hover:bg-white/10 text-neutral-700 dark:text-neutral-300 transition-all" data-filter="performance">
+          Performance &amp; Scale
+        </button>
+</div>
+</div>
+</main>
+<!-- END: HeroSection -->
+<!-- BEGIN: PortfolioProjectsGrid -->
+<section class="max-w-6xl mx-auto px-6 mt-16 sm:mt-24 space-y-8" data-purpose="case-studies-grid">
+<!-- Section Title & Status Indicator -->
+<div class="flex items-center justify-between border-b border-black/10 dark:border-white/10 pb-4">
+<div class="flex items-center space-x-2.5">
+<span class="w-2 h-2 rounded-full bg-emerald-500 animate-ping"></span>
+<span class="text-xs tracking-wider uppercase font-mono text-neutral-500 dark:text-neutral-400">Available for Select Engagements / Q3–Q4</span>
+</div>
+<div class="text-xs text-neutral-500 dark:text-neutral-400 font-mono">
+        Index 2024–2026
+      </div>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6 lg:gap-8" id="projectsContainer">
+<!-- Project Card 1: Autonomous Workflow Orchestration -->
+<article class="project-card group rounded-3xl p-6 sm:p-8 bg-white/70 dark:bg-[#15151b]/80 border border-black/5 dark:border-white/10 backdrop-blur-sm shadow-card-soft hover:shadow-xl transition-all duration-300 flex flex-col justify-between" data-category="ai-systems">
+<div>
+<div class="flex items-start justify-between mb-5">
+<span class="inline-flex items-center gap-1.5 text-xs font-mono uppercase tracking-wider text-amber-600 dark:text-amber-400 bg-amber-500/10 px-2.5 py-1 rounded-full">
+<span class="w-1.5 h-1.5 rounded-full bg-amber-500"></span>
+              Autonomous Agent Suite
+            </span>
+<span class="text-xs font-mono text-neutral-400">01 / STACK</span>
+</div>
+<h3 class="text-2xl sm:text-3xl font-normal tracking-tight text-neutral-900 dark:text-neutral-100 group-hover:text-amber-600 dark:group-hover:text-amber-400 transition-colors">
+            Synapse Multi-Agent Pipeline
+          </h3>
+<p class="mt-3 text-sm sm:text-base text-neutral-600 dark:text-neutral-400 leading-relaxed font-light">
+            Engineered an end-to-end multi-agent orchestration architecture reducing marketing campaign turnaround by 82% with autonomous content research, multimodal asset synthesis, and instant localized distribution.
+          </p>
+<!-- Interactive Node Pipeline Preview Widget -->
+<div class="mt-6 p-4 rounded-2xl bg-neutral-100 dark:bg-neutral-900/90 border border-black/5 dark:border-white/5 space-y-3 font-mono text-xs">
+<div class="flex items-center justify-between text-neutral-500 dark:text-neutral-400">
+<span>Pipeline Status: <strong class="text-emerald-500 font-normal">Active Synapse</strong></span>
+<span>Latency: 48ms</span>
+</div>
+<div class="grid grid-cols-3 gap-2 text-center text-[11px]">
+<div class="p-2 rounded-lg bg-white dark:bg-neutral-800 shadow-xs border border-black/5 dark:border-white/5">
+<div class="text-neutral-400">Ingest</div>
+<div class="font-medium text-neutral-800 dark:text-neutral-200 mt-0.5">Scrape &amp; Trend</div>
+</div>
+<div class="p-2 rounded-lg bg-white dark:bg-neutral-800 shadow-xs border border-black/5 dark:border-white/5 ring-1 ring-amber-500/40">
+<div class="text-amber-500">LLM Core</div>
+<div class="font-medium text-neutral-800 dark:text-neutral-200 mt-0.5">Synthesis v4</div>
+</div>
+<div class="p-2 rounded-lg bg-white dark:bg-neutral-800 shadow-xs border border-black/5 dark:border-white/5">
+<div class="text-neutral-400">Omni-Out</div>
+<div class="font-medium text-neutral-800 dark:text-neutral-200 mt-0.5">Multi-channel</div>
+</div>
+</div>
+</div>
+</div>
+<div class="mt-8 pt-5 border-t border-black/5 dark:border-white/5 flex items-center justify-between">
+<div class="flex items-center gap-4 text-xs font-mono text-neutral-500 dark:text-neutral-400">
+<span>ROI: <strong class="text-neutral-900 dark:text-neutral-200 font-semibold">+340%</strong></span>
+<span>Scale: <strong class="text-neutral-900 dark:text-neutral-200 font-semibold">14 Brands</strong></span>
+</div>
+<a class="inline-flex items-center gap-1 text-xs font-medium text-neutral-900 dark:text-neutral-100 hover:underline" href="#demo" onclick="openDemoModal('Synapse Multi-Agent Pipeline')">
+            Inspect Architecture 
+            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></svg>
+</a>
+</div>
+</article>
+<!-- Project Card 2: Enterprise Brand Intelligence -->
+<article class="project-card group rounded-3xl p-6 sm:p-8 bg-white/70 dark:bg-[#15151b]/80 border border-black/5 dark:border-white/10 backdrop-blur-sm shadow-card-soft hover:shadow-xl transition-all duration-300 flex flex-col justify-between" data-category="creative-dir">
+<div>
+<div class="flex items-start justify-between mb-5">
+<span class="inline-flex items-center gap-1.5 text-xs font-mono uppercase tracking-wider text-emerald-600 dark:text-emerald-400 bg-emerald-500/10 px-2.5 py-1 rounded-full">
+<span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
+              Global Creative Direction
+            </span>
+<span class="text-xs font-mono text-neutral-400">02 / BRAND</span>
+</div>
+<h3 class="text-2xl sm:text-3xl font-normal tracking-tight text-neutral-900 dark:text-neutral-100 group-hover:text-emerald-600 dark:group-hover:text-emerald-400 transition-colors">
+            Aura Worldwide Re-Architecture
+          </h3>
+<p class="mt-3 text-sm sm:text-base text-neutral-600 dark:text-neutral-400 leading-relaxed font-light">
+            Comprehensive creative leadership for a unified cross-platform design language spanning 12 international territories, interactive web properties, and high-impact experiential installations.
+          </p>
+<!-- Metrics Visual Bar -->
+<div class="mt-6 p-4 rounded-2xl bg-neutral-100 dark:bg-neutral-900/90 border border-black/5 dark:border-white/5 space-y-2.5 font-mono text-xs">
+<div class="flex justify-between items-center text-neutral-600 dark:text-neutral-400">
+<span>Brand Recall Velocity</span>
+<span class="font-semibold text-neutral-900 dark:text-white">+91.4%</span>
+</div>
+<div class="w-full h-1.5 bg-neutral-200 dark:bg-neutral-800 rounded-full overflow-hidden">
+<div class="h-full bg-emerald-500 rounded-full w-[91%]"></div>
+</div>
+<div class="flex justify-between text-[11px] text-neutral-400 pt-1">
+<span>Global Reach: 18.2M</span>
+<span>Cannes Lion Nominee</span>
+</div>
+</div>
+</div>
+<div class="mt-8 pt-5 border-t border-black/5 dark:border-white/5 flex items-center justify-between">
+<div class="flex items-center gap-4 text-xs font-mono text-neutral-500 dark:text-neutral-400">
+<span>Global Media: <strong class="text-neutral-900 dark:text-neutral-200 font-semibold">$12M+</strong></span>
+<span>CTR: <strong class="text-neutral-900 dark:text-neutral-200 font-semibold">4.8%</strong></span>
+</div>
+<a class="inline-flex items-center gap-1 text-xs font-medium text-neutral-900 dark:text-neutral-100 hover:underline" href="#demo" onclick="openDemoModal('Aura Worldwide Re-Architecture')">
+            View Case Study
+            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></svg>
+</a>
+</div>
+</article>
+<!-- Project Card 3: Generative Studio Suite -->
+<article class="project-card group rounded-3xl p-6 sm:p-8 bg-white/70 dark:bg-[#15151b]/80 border border-black/5 dark:border-white/10 backdrop-blur-sm shadow-card-soft hover:shadow-xl transition-all duration-300 flex flex-col justify-between" data-category="ai-systems">
+<div>
+<div class="flex items-start justify-between mb-5">
+<span class="inline-flex items-center gap-1.5 text-xs font-mono uppercase tracking-wider text-sky-600 dark:text-sky-400 bg-sky-500/10 px-2.5 py-1 rounded-full">
+<span class="w-1.5 h-1.5 rounded-full bg-sky-500"></span>
+              Generative Engine
+            </span>
+<span class="text-xs font-mono text-neutral-400">03 / PRODUCT</span>
+</div>
+<h3 class="text-2xl sm:text-3xl font-normal tracking-tight text-neutral-900 dark:text-neutral-100 group-hover:text-sky-600 dark:group-hover:text-sky-400 transition-colors">
+            ChromaCanvas Generative Suite
+          </h3>
+<p class="mt-3 text-sm sm:text-base text-neutral-600 dark:text-neutral-400 leading-relaxed font-light">
+            Proprietary browser-based creative suite harnessing fine-tuned diffusion models and dynamic vector synthesis for real-time editorial layout iteration and automated asset export.
+          </p>
+<!-- Interactive Micro Canvas Preview -->
+<div class="mt-6 p-4 rounded-2xl bg-neutral-100 dark:bg-neutral-900/90 border border-black/5 dark:border-white/5 space-y-3">
+<div class="flex items-center justify-between text-xs font-mono text-neutral-500 dark:text-neutral-400">
+<span>Interactive Seed Generator</span>
+<button class="text-sky-600 dark:text-sky-400 hover:underline" id="regenerateSeedBtn">Regenerate</button>
+</div>
+<div class="h-20 rounded-xl bg-gradient-to-r from-neutral-200 via-sky-100 to-indigo-100 dark:from-neutral-800 dark:via-sky-950/40 dark:to-indigo-950/40 flex items-center justify-center border border-black/5 dark:border-white/5 transition-all duration-500" id="seedPreviewArea">
+<span class="text-xs font-mono text-neutral-600 dark:text-neutral-400 flex items-center gap-1.5">
+<span class="w-2 h-2 rounded-full bg-sky-500"></span>
+                Seed: <span id="currentSeedVal">#84920-ALPHA</span>
+</span>
+</div>
+</div>
+</div>
+<div class="mt-8 pt-5 border-t border-black/5 dark:border-white/5 flex items-center justify-between">
+<div class="flex items-center gap-4 text-xs font-mono text-neutral-500 dark:text-neutral-400">
+<span>Throughput: <strong class="text-neutral-900 dark:text-neutral-200 font-semibold">120k assets/mo</strong></span>
+</div>
+<a class="inline-flex items-center gap-1 text-xs font-medium text-neutral-900 dark:text-neutral-100 hover:underline" href="#demo" onclick="openDemoModal('ChromaCanvas Generative Suite')">
+            Launch Preview
+            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></svg>
+</a>
+</div>
+</article>
+<!-- Project Card 4: Enterprise Performance & Scale -->
+<article class="project-card group rounded-3xl p-6 sm:p-8 bg-white/70 dark:bg-[#15151b]/80 border border-black/5 dark:border-white/10 backdrop-blur-sm shadow-card-soft hover:shadow-xl transition-all duration-300 flex flex-col justify-between" data-category="performance">
+<div>
+<div class="flex items-start justify-between mb-5">
+<span class="inline-flex items-center gap-1.5 text-xs font-mono uppercase tracking-wider text-rose-600 dark:text-rose-400 bg-rose-500/10 px-2.5 py-1 rounded-full">
+<span class="w-1.5 h-1.5 rounded-full bg-rose-500"></span>
+              Growth Architecture
+            </span>
+<span class="text-xs font-mono text-neutral-400">04 / REVENUE</span>
+</div>
+<h3 class="text-2xl sm:text-3xl font-normal tracking-tight text-neutral-900 dark:text-neutral-100 group-hover:text-rose-600 dark:group-hover:text-rose-400 transition-colors">
+            Hyperion Omnichannel Engine
+          </h3>
+<p class="mt-3 text-sm sm:text-base text-neutral-600 dark:text-neutral-400 leading-relaxed font-light">
+            Architected continuous feedback loops between predictive algorithmic bidding and algorithmic creative iteration, scaling annual gross revenues past $28M while cutting acquisition costs by 37%.
+          </p>
+<!-- Interactive Metric Ticker -->
+<div class="mt-6 p-4 rounded-2xl bg-neutral-100 dark:bg-neutral-900/90 border border-black/5 dark:border-white/5 grid grid-cols-2 gap-3 text-xs font-mono">
+<div>
+<span class="text-neutral-400 block">Annual Scale</span>
+<span class="text-xl font-semibold text-neutral-900 dark:text-white mt-1 block">$28.4M</span>
+</div>
+<div>
+<span class="text-neutral-400 block">CAC Reduction</span>
+<span class="text-xl font-semibold text-emerald-500 mt-1 block">-37.8%</span>
+</div>
+</div>
+</div>
+<div class="mt-8 pt-5 border-t border-black/5 dark:border-white/5 flex items-center justify-between">
+<div class="flex items-center gap-4 text-xs font-mono text-neutral-500 dark:text-neutral-400">
+<span>Channels: <strong class="text-neutral-900 dark:text-neutral-200 font-semibold">Meta, Google, TV</strong></span>
+</div>
+<a class="inline-flex items-center gap-1 text-xs font-medium text-neutral-900 dark:text-neutral-100 hover:underline" href="#demo" onclick="openDemoModal('Hyperion Omnichannel Engine')">
+            Review Metrics
+            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></svg>
+</a>
+</div>
+</article>
+</div>
+</section>
+<!-- END: PortfolioProjectsGrid -->
+<!-- BEGIN: BottomFloatingDock -->
+<!-- Exact recreation of the macOS/iOS style floating squircle pill dock from https://lh3.googleusercontent.com/aida-public/AB6AXuD0cSnzFM_OuU6NRVUPlS28PXyBwyCTC5w1NVVGmFvzmtdOiT_epZ_LjB3e5c46G3xSH1dbYAS3v5FT9w5Yw9KqIqLZj_fXsP4-aGz6CmSfGmxVw29mupjUBhrHOMFhMFPT6MavVWeDMBOSXelUaof05M0OtEWW9O-ZAkFFT51WNNlVaujT16uEjm5dxZ-IYaMkQTS_HOWGz_cgmXJVnVKw_AuZ916gYjgtN_mxohZ--2Li-W_e720vqrKHQONsaPvlkWQ & https://lh3.googleusercontent.com/aida-public/AB6AXuDwhjnoIY1anQvU7cF4UEuOXqBhd5oyClULsKKNriRJCvh2K4x5xGKmJuwyO5Fq4KiKapXfE1SuBmRfRM4R3bCo2DrH-05oV5ZSRmB0ITeqApmTXe57QbGv73MuMucaGbRiiuuwqO580J0lKcVAVITMIkBjUqGzXV97uLGx-6jbHUpEA_ergkbm11ZEDJVtuCx_6nyUlYBWBA7VaP8o40U2q01lOGj46CC1kfAY8KEcVE4JVkuRn8LLj13wC9VG3rnMVMY -->
+<footer class="fixed bottom-6 inset-x-0 z-40 flex justify-center px-4 pointer-events-none" data-purpose="floating-app-dock">
+<div class="pointer-events-auto inline-flex items-center gap-1.5 sm:gap-2.5 px-3.5 py-2.5 sm:px-4 sm:py-3 rounded-[26px] sm:rounded-[30px] glass-dock transition-all duration-300">
+<!-- LEFT SUITE: Capabilities & Client Emblems (7 Squircles) -->
+<div class="flex items-center gap-1.5 sm:gap-2.5">
+<!-- Icon 1: Yellow Terminal (CLI / Core Engineering) -->
+<div class="dock-item relative group">
+<button aria-label="Terminal &amp; AI Engineering" class="w-10 h-10 sm:w-12 sm:h-12 rounded-[12px] sm:rounded-[14px] bg-[#F7CF2D] text-black flex items-center justify-center shadow-sm transform transition-transform duration-200 hover:-translate-y-2 hover:scale-105 active:scale-95 focus:outline-none" data-dock-filter="terminal">
+<!-- Terminal Graphic -->
+<div class="w-6 h-6 border-2 border-black rounded-[4px] flex items-center justify-start pl-1 gap-0.5">
+<span class="font-mono text-xs font-extrabold leading-none">&gt;_</span>
+</div>
+</button>
+<div class="dock-tooltip absolute -top-9 left-1/2 -translate-x-1/2 opacity-0 pointer-events-none transition-all duration-200 text-[11px] font-mono whitespace-nowrap bg-neutral-900 text-white dark:bg-white dark:text-neutral-950 px-2.5 py-1 rounded-md shadow-md">
+            AI Engineering
+          </div>
+</div>
+<!-- Icon 2: Emerald Green Wireframe Globe (Global Networks) -->
+<div class="dock-item relative group">
+<button aria-label="Global Systems &amp; Networks" class="w-10 h-10 sm:w-12 sm:h-12 rounded-[12px] sm:rounded-[14px] bg-[#00A859] text-white flex items-center justify-center shadow-sm transform transition-transform duration-200 hover:-translate-y-2 hover:scale-105 active:scale-95 focus:outline-none" data-dock-filter="global">
+<svg class="w-6 h-6 sm:w-7 sm:h-7" fill="none" stroke="currentColor" stroke-width="1.8" viewbox="0 0 24 24">
+<circle cx="12" cy="12" r="9"></circle>
+<line x1="3" x2="21" y1="12" y2="12"></line>
+<path d="M12 3a15 15 0 0 1 0 18"></path>
+<path d="M12 3a15 15 0 0 0 0 18"></path>
+</svg>
+</button>
+<div class="dock-tooltip absolute -top-9 left-1/2 -translate-x-1/2 opacity-0 pointer-events-none transition-all duration-200 text-[11px] font-mono whitespace-nowrap bg-neutral-900 text-white dark:bg-white dark:text-neutral-950 px-2.5 py-1 rounded-md shadow-md">
+            Global Systems
+          </div>
+</div>
+<!-- Icon 3: Black Minimal Diagonal Slash (Minimalist Direction) -->
+<div class="dock-item relative group">
+<button aria-label="Creative Minimal Art Direction" class="w-10 h-10 sm:w-12 sm:h-12 rounded-[12px] sm:rounded-[14px] bg-black text-white flex items-center justify-center shadow-sm transform transition-transform duration-200 hover:-translate-y-2 hover:scale-105 active:scale-95 focus:outline-none" data-dock-filter="slash">
+<div class="w-6 h-1.5 bg-white rounded-full -rotate-45"></div>
+</button>
+<div class="dock-tooltip absolute -top-9 left-1/2 -translate-x-1/2 opacity-0 pointer-events-none transition-all duration-200 text-[11px] font-mono whitespace-nowrap bg-neutral-900 text-white dark:bg-white dark:text-neutral-950 px-2.5 py-1 rounded-md shadow-md">
+            Art Direction
+          </div>
+</div>
+<!-- Icon 4: Orange-Red 'Y' Emblem (Yandex / High-scale Platform Experience) -->
+<div class="dock-item relative group">
+<button aria-label="Platform Architecture" class="w-10 h-10 sm:w-12 sm:h-12 rounded-[12px] sm:rounded-[14px] bg-[#EE3F23] text-white flex items-center justify-center shadow-sm transform transition-transform duration-200 hover:-translate-y-2 hover:scale-105 active:scale-95 focus:outline-none" data-dock-filter="yandex">
+<div class="w-6 h-6 sm:w-7 sm:h-7 rounded-full bg-white flex items-center justify-center">
+<span class="text-[#EE3F23] font-bold text-sm sm:text-base font-sans leading-none">Y</span>
+</div>
+</button>
+<div class="dock-tooltip absolute -top-9 left-1/2 -translate-x-1/2 opacity-0 pointer-events-none transition-all duration-200 text-[11px] font-mono whitespace-nowrap bg-neutral-900 text-white dark:bg-white dark:text-neutral-950 px-2.5 py-1 rounded-md shadow-md">
+            Platforms
+          </div>
+</div>
+<!-- Icon 5: Sky Blue Geometric Faceted Prism (Generative 3D) -->
+<div class="dock-item relative group">
+<button aria-label="3D &amp; Generative Media" class="w-10 h-10 sm:w-12 sm:h-12 rounded-[12px] sm:rounded-[14px] bg-[#89CFF0] text-[#0F2D59] flex items-center justify-center shadow-sm transform transition-transform duration-200 hover:-translate-y-2 hover:scale-105 active:scale-95 focus:outline-none" data-dock-filter="prism">
+<svg class="w-6 h-6 sm:w-7 sm:h-7" fill="currentColor" viewbox="0 0 24 24">
+<polygon fill="#1C3879" points="12,3 20,7 15,20 9,20 4,7"></polygon>
+<polygon fill="#60A5FA" points="12,3 15,20 9,20"></polygon>
+<polygon fill="#2563EB" points="4,7 12,3 9,20"></polygon>
+</svg>
+</button>
+<div class="dock-tooltip absolute -top-9 left-1/2 -translate-x-1/2 opacity-0 pointer-events-none transition-all duration-200 text-[11px] font-mono whitespace-nowrap bg-neutral-900 text-white dark:bg-white dark:text-neutral-950 px-2.5 py-1 rounded-md shadow-md">
+            Generative Media
+          </div>
+</div>
+<!-- Icon 6: Charcoal & Yellow 'B' Monogram (BEE Brand Suite) -->
+<div class="dock-item relative group">
+<button aria-label="Brand Systems" class="w-10 h-10 sm:w-12 sm:h-12 rounded-[12px] sm:rounded-[14px] bg-[#1C1C1E] text-white flex items-center justify-center shadow-sm transform transition-transform duration-200 hover:-translate-y-2 hover:scale-105 active:scale-95 focus:outline-none" data-dock-filter="b-corp">
+<!-- Custom Dual-tone 'B' -->
+<div class="flex items-center text-lg sm:text-xl font-black font-sans tracking-tighter">
+<span class="text-amber-400">B</span>
+</div>
+</button>
+<div class="dock-tooltip absolute -top-9 left-1/2 -translate-x-1/2 opacity-0 pointer-events-none transition-all duration-200 text-[11px] font-mono whitespace-nowrap bg-neutral-900 text-white dark:bg-white dark:text-neutral-950 px-2.5 py-1 rounded-md shadow-md">
+            Brand Identity
+          </div>
+</div>
+<!-- Icon 7: Crisp BBDO Agency Emblem -->
+<div class="dock-item relative group">
+<button aria-label="Agency Leadership &amp; BBDO Heritage" class="w-10 h-10 sm:w-12 sm:h-12 rounded-[12px] sm:rounded-[14px] bg-[#EDEDED] flex items-center justify-center shadow-sm transform transition-transform duration-200 hover:-translate-y-2 hover:scale-105 active:scale-95 focus:outline-none border border-black/5" data-dock-filter="agency">
+<span class="text-[#E31B23] font-extrabold text-[9px] sm:text-[11px] font-sans tracking-tighter leading-none">BBDO</span>
+</button>
+<div class="dock-tooltip absolute -top-9 left-1/2 -translate-x-1/2 opacity-0 pointer-events-none transition-all duration-200 text-[11px] font-mono whitespace-nowrap bg-neutral-900 text-white dark:bg-white dark:text-neutral-950 px-2.5 py-1 rounded-md shadow-md">
+            Agency Direction
+          </div>
+</div>
+</div>
+<!-- Center Thin Vertical Divider -->
+<div aria-hidden="true" class="w-px h-7 sm:h-9 bg-neutral-300 dark:bg-neutral-600 mx-0.5 sm:mx-1"></div>
+<!-- RIGHT SUITE: Connect & Comms (3 Squircles) -->
+<div class="flex items-center gap-1.5 sm:gap-2.5">
+<!-- Icon 8: LinkedIn Deep Blue Squircle ('in') -->
+<div class="dock-item relative group">
+<a aria-label="LinkedIn Profile" class="w-10 h-10 sm:w-12 sm:h-12 rounded-[12px] sm:rounded-[14px] bg-[#0077B5] text-white flex items-center justify-center shadow-sm transform transition-transform duration-200 hover:-translate-y-2 hover:scale-105 active:scale-95 focus:outline-none" href="https://linkedin.com" rel="noopener noreferrer" target="_blank">
+<svg class="w-5 h-5 sm:w-6 sm:h-6" fill="currentColor" viewbox="0 0 24 24">
+<path d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14m-.5 15.5v-5.3a3.26 3.26 0 0 0-3.26-3.26c-.85 0-1.84.52-2.28 1.3v-1.11h-2.79v8.37h2.79v-4.93c0-.77.62-1.4 1.39-1.4a1.4 1.4 0 0 1 1.4 1.4v4.93h2.75M6.46 10.9v8.37H9.2V10.9H6.46M7.83 6.45a1.63 1.63 0 1 0 0 3.26 1.63 1.63 0 0 0 0-3.26Z"></path>
+</svg>
+</a>
+<div class="dock-tooltip absolute -top-9 left-1/2 -translate-x-1/2 opacity-0 pointer-events-none transition-all duration-200 text-[11px] font-mono whitespace-nowrap bg-neutral-900 text-white dark:bg-white dark:text-neutral-950 px-2.5 py-1 rounded-md shadow-md">
+            LinkedIn
+          </div>
+</div>
+<!-- Icon 9: Bright Blue Telegram Paper Plane -->
+<div class="dock-item relative group">
+<a aria-label="Telegram Channel &amp; Contact" class="w-10 h-10 sm:w-12 sm:h-12 rounded-[12px] sm:rounded-[14px] bg-[#2AABEE] text-white flex items-center justify-center shadow-sm transform transition-transform duration-200 hover:-translate-y-2 hover:scale-105 active:scale-95 focus:outline-none" href="https://t.me" rel="noopener noreferrer" target="_blank">
+<svg class="w-5 h-5 sm:w-6 sm:h-6 -translate-x-0.5" fill="currentColor" viewbox="0 0 24 24">
+<path d="m20.665 3.717-17.73 6.837c-1.21.486-1.203 1.161-.222 1.462l4.552 1.42 10.532-6.645c.498-.303.953-.14.579.192l-8.533 7.701h-.002l-.313 4.672c.46 0 .663-.211.921-.46l2.211-2.15 4.599 3.397c.848.467 1.457.227 1.668-.785l3.019-14.228c.309-1.239-.473-1.8-1.282-1.411Z"></path>
+</svg>
+</a>
+<div class="dock-tooltip absolute -top-9 left-1/2 -translate-x-1/2 opacity-0 pointer-events-none transition-all duration-200 text-[11px] font-mono whitespace-nowrap bg-neutral-900 text-white dark:bg-white dark:text-neutral-950 px-2.5 py-1 rounded-md shadow-md">
+            Telegram
+          </div>
+</div>
+<!-- Icon 10: Blue-Cyan Gradient Mail Envelope -->
+<div class="dock-item relative group">
+<button aria-label="Direct Email Dispatch" class="w-10 h-10 sm:w-12 sm:h-12 rounded-[12px] sm:rounded-[14px] bg-gradient-to-b from-[#2196F3] to-[#00BCD4] text-white flex items-center justify-center shadow-sm transform transition-transform duration-200 hover:-translate-y-2 hover:scale-105 active:scale-95 focus:outline-none" id="dockContactBtn">
+<svg class="w-5 h-5 sm:w-6 sm:h-6" fill="none" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24">
+<rect height="16" rx="2" width="20" x="2" y="4"></rect>
+<path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"></path>
+</svg>
+</button>
+<div class="dock-tooltip absolute -top-9 left-1/2 -translate-x-1/2 opacity-0 pointer-events-none transition-all duration-200 text-[11px] font-mono whitespace-nowrap bg-neutral-900 text-white dark:bg-white dark:text-neutral-950 px-2.5 py-1 rounded-md shadow-md">
+            Direct Dispatch
+          </div>
+</div>
+</div>
+</div>
+</footer>
+<!-- END: BottomFloatingDock -->
+<!-- BEGIN: AboutModalDrawer -->
+<!-- Slide-over Profile and Agency Spec Modal triggered by top 'about' button -->
+<div class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/40 backdrop-blur-md opacity-0 pointer-events-none transition-opacity duration-300" data-purpose="biography-drawer" id="aboutModal">
+<div class="relative w-full max-w-2xl bg-white dark:bg-neutral-900 rounded-3xl p-6 sm:p-8 shadow-2xl border border-black/10 dark:border-white/10 max-h-[90vh] overflow-y-auto transform scale-95 transition-transform duration-300">
+<!-- Close Button -->
+<button aria-label="Close dialog" class="absolute top-6 right-6 p-2 rounded-full text-neutral-400 hover:text-black dark:hover:text-white transition-colors" id="closeAboutBtn">
+<svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24">
+<line x1="18" x2="6" y1="6" y2="18"></line>
+<line x1="6" x2="18" y1="6" y2="18"></line>
+</svg>
+</button>
+<!-- Modal Content -->
+<div class="flex items-center gap-4">
+<div class="w-14 h-14 rounded-full overflow-hidden grayscale ring-1 ring-black/10">
+<img alt="Matthew Chudnovski" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDLj3Nxawmc-L3UIhV29xU8F1AmpC_lWFO5vO67G9v6TJU_a-toN1uRVpr7_mXQF4c6PoHrhzgZ1lPi9evLX1ktWh1DbvMrJOhIQ4X0nIFVEFCM7GeQkJ4AB1RVOQv6oT44eA7eSN7zzxL7_pQprXyoACpINHjfa_P4RI1P2LIMYxc8sZERNRz5ETCAMfUatWJaXFTPY3SBE8OZWJyrWwwoCY9BcfcBcPqKveEQeivv4XAIbEtuTU6Ywg"/>
+</div>
+<div>
+<h3 class="text-xl font-medium text-neutral-900 dark:text-white">Matthew Chudnovski</h3>
+<p class="text-xs font-mono text-neutral-500 dark:text-neutral-400">Creative Direction &amp; Autonomous AI Strategy</p>
+</div>
+</div>
+<div class="mt-6 space-y-4 text-sm text-neutral-600 dark:text-neutral-300 font-light leading-relaxed">
+<p>
+          Matthew operates at the synthesis of <strong>contemporary creative direction</strong>, <strong>high-performance marketing systems</strong>, and <strong>autonomous multi-agent AI execution</strong>. Over 12+ years of leading multidisciplinary studios and consulting for global enterprises, he has transformed early-stage ventures into market leaders and orchestrated multi-million-dollar global brand rollouts.
+        </p>
+<p>
+          Prior engagements include executive leadership across BBDO network branches, tier-1 tech platforms, and high-frequency venture studios.
+        </p>
+</div>
+<!-- Core Competencies Matrix -->
+<div class="mt-8 border-t border-black/5 dark:border-white/10 pt-6">
+<h4 class="text-xs font-mono uppercase tracking-wider text-neutral-400 dark:text-neutral-500 mb-4">Core Operating Capabilities</h4>
+<div class="grid grid-cols-2 gap-3 text-xs">
+<div class="p-3 rounded-xl bg-neutral-50 dark:bg-neutral-800/60 border border-black/5 dark:border-white/5">
+<span class="font-medium text-neutral-900 dark:text-white block mb-1">Autonomous Workflows</span>
+<span class="text-neutral-500 dark:text-neutral-400">LangChain, CrewAI, Fine-tuned LLMs, Custom APIs</span>
+</div>
+<div class="p-3 rounded-xl bg-neutral-50 dark:bg-neutral-800/60 border border-black/5 dark:border-white/5">
+<span class="font-medium text-neutral-900 dark:text-white block mb-1">Executive Direction</span>
+<span class="text-neutral-500 dark:text-neutral-400">Brand Identity, Global Systems, Editorial Typography</span>
+</div>
+<div class="p-3 rounded-xl bg-neutral-50 dark:bg-neutral-800/60 border border-black/5 dark:border-white/5">
+<span class="font-medium text-neutral-900 dark:text-white block mb-1">Performance Architecture</span>
+<span class="text-neutral-500 dark:text-neutral-400">Attribution Models, CRO, Multivariant Experimentation</span>
+</div>
+<div class="p-3 rounded-xl bg-neutral-50 dark:bg-neutral-800/60 border border-black/5 dark:border-white/5">
+<span class="font-medium text-neutral-900 dark:text-white block mb-1">Generative Production</span>
+<span class="text-neutral-500 dark:text-neutral-400">ComfyUI Pipelines, Flux, NeRF, Procedural 3D</span>
+</div>
+</div>
+</div>
+<!-- Action Footer -->
+<div class="mt-8 pt-6 border-t border-black/5 dark:border-white/10 flex items-center justify-between">
+<span class="text-xs font-mono text-neutral-400">Based in Central Europe / Global Remote</span>
+<button class="px-5 py-2.5 rounded-full bg-neutral-900 text-white dark:bg-white dark:text-neutral-900 text-xs font-medium hover:opacity-90 transition-opacity" id="bookSessionBtn">
+          Schedule Advisory
+        </button>
+</div>
+</div>
+</div>
+<!-- END: AboutModalDrawer -->
+<!-- BEGIN: InteractiveToastNotification -->
+<div class="fixed top-20 right-6 z-50 transform translate-y-4 opacity-0 pointer-events-none transition-all duration-300 bg-neutral-900 text-white dark:bg-white dark:text-neutral-900 text-xs font-mono px-4 py-2.5 rounded-2xl shadow-xl border border-black/10 dark:border-white/20 flex items-center gap-2" id="toastNotification">
+<span class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span>
+<span id="toastMessage">Action recorded</span>
+</div>
+<!-- END: InteractiveToastNotification -->
+<!-- BEGIN: CoreInteractivityScript -->
+<script data-purpose="theme-and-dock-interactions">
+    // 1. Light / Dark Mode Toggle
+    const themeToggleBtn = document.getElementById('themeToggleBtn');
+    const htmlElement = document.documentElement;
+
+    themeToggleBtn.addEventListener('click', () => {
+      htmlElement.classList.toggle('dark');
+      const isDark = htmlElement.classList.contains('dark');
+      showToast(isDark ? "Dark theme active" : "Light theme active");
+    });
+
+    // 2. Ambient Audio Toggle Simulation
+    const ambientBtn = document.getElementById('ambientSoundBtn');
+    const playIcon = document.getElementById('playIcon');
+    const pauseIcon = document.getElementById('pauseIcon');
+    let isPlaying = false;
+
+    ambientBtn.addEventListener('click', () => {
+      isPlaying = !isPlaying;
+      if (isPlaying) {
+        playIcon.classList.add('hidden');
+        pauseIcon.classList.remove('hidden');
+        showToast("Ambient generative soundscape: ON");
+      } else {
+        playIcon.classList.remove('hidden');
+        pauseIcon.classList.add('hidden');
+        showToast("Ambient soundscape: PAUSED");
+      }
+    });
+
+    // 3. About Drawer Modal Controls
+    const openAboutBtn = document.getElementById('openAboutBtn');
+    const closeAboutBtn = document.getElementById('closeAboutBtn');
+    const aboutModal = document.getElementById('aboutModal');
+
+    function toggleAboutModal(show) {
+      if (show) {
+        aboutModal.classList.remove('opacity-0', 'pointer-events-none');
+        aboutModal.querySelector('div').classList.remove('scale-95');
+        aboutModal.querySelector('div').classList.add('scale-100');
+      } else {
+        aboutModal.classList.add('opacity-0', 'pointer-events-none');
+        aboutModal.querySelector('div').classList.remove('scale-100');
+        aboutModal.querySelector('div').classList.add('scale-95');
+      }
+    }
+
+    openAboutBtn.addEventListener('click', () => toggleAboutModal(true));
+    closeAboutBtn.addEventListener('click', () => toggleAboutModal(false));
+    aboutModal.addEventListener('click', (e) => {
+      if (e.target === aboutModal) toggleAboutModal(false);
+    });
+
+    // 4. Filter Tags Interaction
+    const filterTags = document.querySelectorAll('.filter-tag');
+    const projectCards = document.querySelectorAll('.project-card');
+
+    filterTags.forEach(button => {
+      button.addEventListener('click', () => {
+        filterTags.forEach(b => {
+          b.classList.remove('bg-neutral-900', 'text-white', 'dark:bg-white', 'dark:text-neutral-900');
+          b.classList.add('bg-black/5', 'text-neutral-700', 'dark:bg-white/5', 'dark:text-neutral-300');
+        });
+        button.classList.add('bg-neutral-900', 'text-white', 'dark:bg-white', 'dark:text-neutral-900');
+        button.classList.remove('bg-black/5', 'text-neutral-700', 'dark:bg-white/5', 'dark:text-neutral-300');
+
+        const filterVal = button.getAttribute('data-filter');
+        projectCards.forEach(card => {
+          if (filterVal === 'all' || card.getAttribute('data-category') === filterVal) {
+            card.style.display = 'flex';
+          } else {
+            card.style.display = 'none';
+          }
+        });
+      });
+    });
+
+    // 5. Dock Items Filtering / Action Highlights
+    const dockButtons = document.querySelectorAll('[data-dock-filter]');
+    dockButtons.forEach(btn => {
+      btn.addEventListener('click', () => {
+        const dockType = btn.getAttribute('data-dock-filter');
+        showToast(`Filtered context: ${dockType.toUpperCase()}`);
+        
+        // Visual bounce animation feedback on cards
+        projectCards.forEach(card => {
+          card.classList.add('scale-[0.99]');
+          setTimeout(() => card.classList.remove('scale-[0.99]'), 200);
+        });
+      });
+    });
+
+    // 6. Direct Dispatch Email Trigger
+    document.getElementById('dockContactBtn').addEventListener('click', () => {
+      const email = "matthew@chudnovski.studio";
+      navigator.clipboard.writeText(email);
+      showToast(`Copied to clipboard: ${email}`);
+    });
+
+    document.getElementById('bookSessionBtn')?.addEventListener('click', () => {
+      toggleAboutModal(false);
+      showToast("Consultation channel: matthew@chudnovski.studio");
+    });
+
+    // 7. Seed Generator Micro-interaction
+    const regenBtn = document.getElementById('regenerateSeedBtn');
+    const seedArea = document.getElementById('seedPreviewArea');
+    const seedVal = document.getElementById('currentSeedVal');
+    
+    if (regenBtn) {
+      regenBtn.addEventListener('click', () => {
+        const randomSeed = Math.floor(10000 + Math.random() * 90000);
+        seedVal.innerText = `#${randomSeed}-GEN`;
+        seedArea.classList.toggle('rotate-[0.5deg]');
+        showToast(`Compiled latent seed: #${randomSeed}`);
+      });
+    }
+
+    // 8. Global Toast Helper
+    function showToast(text) {
+      const toast = document.getElementById('toastNotification');
+      const msg = document.getElementById('toastMessage');
+      msg.textContent = text;
+      toast.classList.remove('opacity-0', 'pointer-events-none', 'translate-y-4');
+      toast.classList.add('opacity-100', 'translate-y-0');
+
+      clearTimeout(window._toastTimer);
+      window._toastTimer = setTimeout(() => {
+        toast.classList.remove('opacity-100', 'translate-y-0');
+        toast.classList.add('opacity-0', 'pointer-events-none', 'translate-y-4');
+      }, 2500);
+    }
+
+    // Modal preview for project case studies
+    window.openDemoModal = function(title) {
+      showToast(`Opening dossier: ${title}`);
+    };
+  </script>
+<!-- END: CoreInteractivityScript -->
+</body></html>
