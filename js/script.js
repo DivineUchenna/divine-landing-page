@@ -123,6 +123,58 @@
     }
   });
 
+  /* ---------------------------------------------------------------- avatar */
+
+  var avatarInput = document.getElementById('avatarInput');
+  var heroAvatar = document.getElementById('heroAvatar');
+  var AVATAR_KEY = 'avatar';
+
+  try {
+    var saved = localStorage.getItem(AVATAR_KEY);
+    if (saved) heroAvatar.src = saved;
+  } catch (e) { /* storage blocked: falls back to the default photo */ }
+
+  // Crop to a centred square and shrink, so the saved copy stays small.
+  function squareDataUrl(img, size) {
+    var side = Math.min(img.naturalWidth, img.naturalHeight);
+    var canvas = document.createElement('canvas');
+    canvas.width = canvas.height = size;
+    canvas.getContext('2d').drawImage(
+      img,
+      (img.naturalWidth - side) / 2, (img.naturalHeight - side) / 2, side, side,
+      0, 0, size, size
+    );
+    return canvas.toDataURL('image/jpeg', 0.88);
+  }
+
+  avatarInput.addEventListener('change', function () {
+    var file = avatarInput.files && avatarInput.files[0];
+    if (!file) return;
+    if (file.type.indexOf('image/') !== 0) {
+      showToast('Pick an image file');
+      return;
+    }
+    var url = URL.createObjectURL(file);
+    var img = new Image();
+    img.onload = function () {
+      var data = squareDataUrl(img, 480);
+      URL.revokeObjectURL(url);
+      heroAvatar.src = data;
+      try {
+        localStorage.setItem(AVATAR_KEY, data);
+        showToast('Photo updated');
+      } catch (e) {
+        showToast('Photo updated for this visit only');
+      }
+    };
+    img.onerror = function () {
+      URL.revokeObjectURL(url);
+      showToast('Could not read that image');
+    };
+    img.src = url;
+    avatarInput.value = '';
+  });
+
   /* ---------------------------------------------------------------- email */
 
   document.getElementById('copyEmail').addEventListener('click', function () {

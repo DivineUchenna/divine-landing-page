@@ -20,8 +20,8 @@ design/             the original Google Stitch export, kept for reference
 ```
 
 `design/` holds build inputs and reference, none of which the live page loads:
-`code.html` and `screen.png` are the original Stitch export, `feature-source.jpg` is the
-photo the ASCII band is generated from, and `asciify.py` is the generator.
+`code.html` and `screen.png` are the original Stitch export; `feature-source.jpg` and
+`asciify.py` are from the old ASCII backdrop, which has been removed.
 
 ## Before you share the link
 
@@ -42,39 +42,11 @@ Then paste the live URL into the
 [X Card Validator](https://cards-dev.twitter.com/validator) to confirm the preview card
 renders.
 
-## The ASCII backdrop
+## The profile photo
 
-The character art behind your name is real text in a `<pre>`, not an image. That way it
-inherits `color` (so it works in both themes from one source), stays crisp at any zoom, and
-sizes to exactly 100vw because monospace width is just `columns x 0.6em`.
-
-It sits inside `.hero` as an absolutely-positioned layer behind the copy. Two mask layers
-are composited together: a radial ellipse that clears a hole behind the text so it stays
-readable, and a vertical gradient that fades the art in below the nav and out again before
-the project cards.
-
-To regenerate it from a different photo:
-
-```
-python3 design/asciify.py <image> <cols> <lo%> <hi%> <gamma>
-python3 design/asciify.py design/feature-source.jpg 220 0 100 2.2   # current settings
-```
-
-Write stdout to a file (the script prints its stats to stderr, so they will not contaminate
-the art) and paste the result between the `<pre>` tags in `index.html`. Notes:
-
-- The source is **cropped to a panoramic slice first** — the full 1400x787 frame produces a
-  block ~800px deep that runs over the cards. The current art comes from `y=250..760`.
-- **Gamma controls density.** Higher is denser. 2.2 gives ~82% ink coverage, which is what
-  makes the art clearly visible; below ~1.0 it reads as faint dust.
-- The script normalises contrast before mapping. The source is very flat (68% near-white,
-  darkest pixel 110), so without that step it renders as a barely-visible ghost.
-- Keep the column count at 220 or update `font-size: calc(100vw / 132)` in `css/styles.css`
-  to match — that divisor is `columns x 0.6`.
-- Visibility is tuned with the `color` alpha on `.ascii pre`, not the gamma.
-
-The backdrop is `aria-hidden` because it is decorative; a screen reader would otherwise read
-out thousands of punctuation characters.
+The circle above your name is a file picker. Click it, choose a photo, and it is cropped to a
+centred square and saved in that browser (localStorage). The default is
+`assets/founder/divine.jpg`. To change it for every visitor, replace that file.
 
 ## Editing the content
 

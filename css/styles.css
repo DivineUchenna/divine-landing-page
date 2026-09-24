@@ -288,24 +288,20 @@ button {
 .hero__id,
 .hero__lede { position: relative; z-index: 1; }
 
-.hero__id { display: grid; justify-items: center; }
+.hero__id { display: grid; justify-items: center; gap: 18px; }
 
 .avatar {
   width: 104px;
   height: 104px;
-  padding: 4px;
   border-radius: 50%;
-  background: linear-gradient(to bottom, rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.4));
-  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.08), 0 0 0 1px rgba(0, 0, 0, 0.05);
+  box-shadow: 0 10px 28px rgba(0, 0, 0, 0.22), 0 2px 6px rgba(0, 0, 0, 0.12);
 }
 :root[data-theme="dark"] .avatar {
-  background: linear-gradient(to bottom, #3f3f46, #18181b);
-  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(255, 255, 255, 0.1);
+  box-shadow: 0 10px 28px rgba(0, 0, 0, 0.7), 0 2px 6px rgba(0, 0, 0, 0.5);
 }
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme="light"]) .avatar {
-    background: linear-gradient(to bottom, #3f3f46, #18181b);
-    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(255, 255, 255, 0.1);
+    box-shadow: 0 10px 28px rgba(0, 0, 0, 0.7), 0 2px 6px rgba(0, 0, 0, 0.5);
   }
 }
 
@@ -314,10 +310,35 @@ button {
   height: 100%;
   border-radius: 50%;
   object-fit: cover;
-  filter: grayscale(1) contrast(1.08);
 }
 
-.avatar--sm { width: 56px; height: 56px; padding: 3px; }
+.avatar--sm { width: 56px; height: 56px; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2); }
+.avatar--lg { width: 132px; height: 132px; }
+
+/* Upload avatar: the whole circle is a label for a hidden file input. */
+.avatar--upload {
+  position: relative;
+  display: block;
+  cursor: pointer;
+  transition: transform 0.18s ease;
+}
+.avatar--upload:hover { transform: scale(1.03); }
+.avatar--upload:focus-within { outline: 2px solid var(--ink); outline-offset: 3px; }
+.avatar__hint {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  background: rgba(0, 0, 0, 0.45);
+  color: #fff;
+  opacity: 0;
+  transition: opacity 0.18s ease;
+  pointer-events: none;
+}
+.avatar__hint svg { width: 26px; height: 26px; }
+.avatar--upload:hover .avatar__hint,
+.avatar--upload:focus-within .avatar__hint { opacity: 1; }
 
 .hero__name {
   font-family: var(--font-name);
@@ -364,86 +385,6 @@ button {
   box-shadow: 0 6px 18px -6px rgba(0, 0, 0, 0.35);
 }
 .btn--primary:hover { opacity: 0.88; }
-
-/* ---------------------------------------------------------------- ascii backdrop
-   Real characters, not an image: inherits color so it works in both themes, and
-   monospace means 220 cols x 0.6em advance sizes to exactly 100vw at any width.
-   Sits behind the hero text; a radial hole keeps the copy legible. */
-
-.ascii {
-  position: absolute;
-  top: 0;
-  left: 50%;
-  transform: translateX(-50%);
-  z-index: 0;
-  display: flex;
-  justify-content: center;
-  width: 100vw;
-  overflow: hidden;
-  line-height: 0;
-  pointer-events: none;
-  /* Two layers. Horizontally, a clear column down the middle so the art sits
-     either side of the copy rather than behind it. Vertically, fade in below the
-     nav and out again before the cards. The column is sized in px, not %, so it
-     tracks the 680px hero rather than the viewport. */
-  -webkit-mask-image:
-    linear-gradient(to right,
-      #000 0,
-      #000 calc(50% - 420px),
-      transparent calc(50% - 340px),
-      transparent calc(50% + 340px),
-      #000 calc(50% + 420px),
-      #000 100%),
-    linear-gradient(to bottom, transparent 0%, #000 13%, #000 52%, transparent 90%);
-  -webkit-mask-composite: source-in;
-  mask-image:
-    linear-gradient(to right,
-      #000 0,
-      #000 calc(50% - 420px),
-      transparent calc(50% - 340px),
-      transparent calc(50% + 340px),
-      #000 calc(50% + 420px),
-      #000 100%),
-    linear-gradient(to bottom, transparent 0%, #000 13%, #000 52%, transparent 90%);
-  mask-composite: intersect;
-}
-
-/* Below ~1000px there is no room either side of the copy for a column, so the
-   art goes back to sitting behind it with a hole punched out instead. */
-@media (max-width: 999px) {
-  .ascii {
-    -webkit-mask-image:
-      radial-gradient(ellipse 46% 38% at 50% 40%, transparent 12%, #000 76%),
-      linear-gradient(to bottom, transparent 0%, #000 13%, #000 52%, transparent 90%);
-    mask-image:
-      radial-gradient(ellipse 46% 38% at 50% 40%, transparent 12%, #000 76%),
-      linear-gradient(to bottom, transparent 0%, #000 13%, #000 52%, transparent 90%);
-  }
-}
-
-.ascii pre {
-  margin: 0;
-  font-family: "JetBrains Mono", ui-monospace, "SFMono-Regular", monospace;
-  font-size: calc(100vw / 132);
-  line-height: 1;
-  white-space: pre;
-  flex: 0 0 auto;
-  color: rgba(23, 23, 23, 0.3);
-  user-select: none;
-  -webkit-user-select: none;
-}
-
-:root[data-theme="dark"] .ascii pre { color: rgba(245, 245, 245, 0.3); }
-@media (prefers-color-scheme: dark) {
-  :root:not([data-theme="light"]) .ascii pre { color: rgba(245, 245, 245, 0.3); }
-}
-
-/* On a phone the block would only be ~136px tall at the desktop ratio, leaving the
-   hero copy on blank space. It is scaled up instead and cropped evenly by the
-   centring above, so it still reads as a backdrop rather than a strip. */
-@media (max-width: 639px) {
-  .ascii pre { font-size: calc(100vw / 58); }
-}
 
 /* ---------------------------------------------------------------- work */
 
