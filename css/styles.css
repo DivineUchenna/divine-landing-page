@@ -1044,3 +1044,121 @@ button {
     transition-duration: 0.01ms !important;
   }
 }
+
+/* ---------------------------------------------------------------- stack
+   Tools I use. Same hairline-grid look as the cards; logos are inline SVG in
+   currentColor so they stay grey and follow the theme. */
+
+.stack {
+  --st-canvas: #ffffff;
+  --st-line: #e2e2de;
+  --st-logo: #6b6b67;
+  --st-mute: #8e8e8a;
+  --st-ink: #171717;
+  --st-hover: #f6f6f4;
+  --st-line-hover: #cfcfca;
+  --st-mono: "JetBrains Mono", ui-monospace, monospace;
+
+  max-width: var(--page);
+  margin: 0 auto;
+  padding: 72px var(--gutter) 0;
+}
+
+:root[data-theme="dark"] .stack {
+  --st-canvas: #0d0d11;
+  --st-line: rgba(255, 255, 255, 0.14);
+  --st-logo: #9a9aa2;
+  --st-mute: #7c7c84;
+  --st-ink: #f5f5f5;
+  --st-hover: #16161c;
+  --st-line-hover: rgba(255, 255, 255, 0.3);
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) .stack {
+    --st-canvas: #0d0d11;
+    --st-line: rgba(255, 255, 255, 0.14);
+    --st-logo: #9a9aa2;
+    --st-mute: #7c7c84;
+    --st-ink: #f5f5f5;
+    --st-hover: #16161c;
+    --st-line-hover: rgba(255, 255, 255, 0.3);
+  }
+}
+
+.stack__label {
+  margin-bottom: 14px;
+  font-family: var(--st-mono);
+  font-size: 8.5px;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--st-mute);
+}
+
+.stack__grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+/* each tool is its own rounded tile and links to the tool's real site */
+.stack__link {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  min-height: 112px;
+  padding: 20px 8px;
+  border: 1px solid var(--st-line);
+  border-radius: 16px;
+  background: var(--st-canvas);
+  color: var(--st-logo);
+  text-decoration: none;
+  transition: background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease;
+}
+.stack__link:hover,
+.stack__link:focus-visible {
+  background: var(--st-hover);
+  border-color: var(--st-line-hover);
+  color: var(--st-ink);
+}
+.stack__link:focus-visible { outline: 2px solid var(--st-ink); outline-offset: 2px; }
+.stack__link svg { width: 28px; height: 28px; flex: none; }
+
+.stack__name {
+  font-family: var(--font);
+  font-size: 12px;
+  font-weight: 400;
+  color: inherit;
+  text-align: center;
+}
+
+@media (min-width: 900px) {
+  .stack { padding-top: 96px; }
+  .stack__link { min-height: 132px; }
+  .stack__link svg { width: 32px; height: 32px; }
+}
+
+/* room above the floating dock */
+.stack { padding-bottom: 140px; }
+
+/* ---------------------------------------------------------------- location
+   Small mono line under the name. Same label look as the card numbers. */
+
+.hero__geo {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 4px 10px;
+  margin-top: -6px;
+  font-family: "JetBrains Mono", ui-monospace, monospace;
+  font-size: 8.5px;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--ink-mute);
+}
