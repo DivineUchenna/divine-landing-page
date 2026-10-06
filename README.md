@@ -14,7 +14,8 @@ css/styles.css      all styles, light and dark, tokens on :root
 js/script.js        theme toggle, avatar upload, copy-email
 assets/
   founder/          your photo (used in the hero and the preview card)
-  logo/             Flowlyy favicon (also used as the icon on the Work tile and the handles row)
+  logo/             tab icons made from your photo (favicon-divine-*.png, apple-touch-icon.png),
+                    plus the Flowlyy mark (favicon.svg) used on the Work tile and the handles row
   og-image.png      1200x630 link preview card
 design/             the original Google Stitch export, kept for reference
 ```

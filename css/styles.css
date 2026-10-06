@@ -45,9 +45,9 @@
 
   --page: 900px;
   /* Work and Stack share one two-column layout: label left, content right */
-  --col-label: 100px;
+  --col-label: 110px;
   --col-gap: 36px;
-  --col-body: 480px;
+  --col-body: 540px;
   --gutter: 20px;
 }
 
@@ -154,11 +154,7 @@ button {
 
 ::selection { background: var(--ink); color: var(--canvas-1); }
 
-:focus-visible {
-  outline: 2px solid var(--accent);
-  outline-offset: 3px;
-  border-radius: 4px;
-}
+:focus-visible { outline: none; }
 
 .visually-hidden {
   position: absolute;
@@ -244,7 +240,7 @@ button {
   transition: color 0.2s ease;
 }
 .pill__icon:hover { color: var(--ink); }
-.pill__icon svg { width: 13px; height: 13px; }
+.pill__icon svg { width: 16px; height: 16px; }
 
 .icon-moon { display: none; }
 :root[data-theme="dark"] .icon-sun { display: none; }
@@ -308,7 +304,7 @@ button {
 }
 
 .avatar--sm { width: 56px; height: 56px; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2); }
-.avatar--lg { width: 96px; height: 96px; }
+.avatar--lg { width: 112px; height: 112px; }
 
 /* Upload avatar: the whole circle is a label for a hidden file input. */
 .avatar--upload {
@@ -318,7 +314,7 @@ button {
   transition: transform 0.18s ease;
 }
 .avatar--upload:hover { transform: scale(1.03); }
-.avatar--upload:focus-within { outline: 2px solid var(--ink); outline-offset: 3px; }
+.avatar--upload:focus-within { outline: none; }
 .avatar__hint {
   position: absolute;
   inset: 0;
@@ -339,7 +335,7 @@ button {
   font-family: var(--font-name);
   /* the name is the hero's focal point now, so it scales with the viewport;
      tracking tightens as it grows, since 0.16em sprawls at display sizes */
-  font-size: clamp(0.95rem, 2.6vw, 1.15rem);
+  font-size: clamp(1.05rem, 3vw, 1.35rem);
   /* 600 in a proportional sans reads at about the weight 500 did in mono */
   font-weight: 600;
   letter-spacing: 0.02em;
@@ -476,23 +472,24 @@ button {
 .sq {
   display: grid;
   place-items: center;
-  width: 38px;
-  height: 38px;
-  border-radius: 8px;
+  width: 46px;
+  height: 46px;
+  border-radius: 10px;
   background: none;
   color: var(--ink-mute);
   transition: transform 0.2s ease, color 0.2s ease;
 }
-.sq svg { width: 20px; height: 20px; }
+.sq svg { width: 24px; height: 24px; }
 .sq:hover,
 .sq:focus-visible { color: var(--ink); transform: translateY(-2px); }
 .sq:active { transform: translateY(0); }
+.sq:focus-visible { outline: none; }
 
 /* The Flowlyy mark is an <img>, so it is turned grey with a filter rather than a
    fill, and goes to full ink on hover. */
 .sq--flowlyy img {
-  width: 22px;
-  height: 22px;
+  width: 26px;
+  height: 26px;
   filter: brightness(0);
   opacity: 0.5;
   transition: opacity 0.2s ease;
@@ -567,9 +564,9 @@ button {
 }
 
 @media (max-width: 380px) {
-  .sq { width: 32px; height: 32px; }
-  .sq svg { width: 18px; height: 18px; }
-  .sq--flowlyy img { width: 20px; height: 20px; }
+  .sq { width: 36px; height: 36px; }
+  .sq svg { width: 20px; height: 20px; }
+  .sq--flowlyy img { width: 22px; height: 22px; }
   .dock { gap: 3px; }
   .dock__group { gap: 3px; }
 }
@@ -595,7 +592,6 @@ button {
   --st-mute: #8e8e8a;
   --st-ink: #171717;
   --st-hover: #f6f6f4;
-  --st-line-hover: #cfcfca;
   --st-mono: "JetBrains Mono", ui-monospace, monospace;
 
   display: grid;
@@ -612,7 +608,6 @@ button {
   --st-mute: #7c7c84;
   --st-ink: #f5f5f5;
   --st-hover: #16161c;
-  --st-line-hover: rgba(255, 255, 255, 0.3);
 }
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme="light"]) .stack {
@@ -622,14 +617,13 @@ button {
     --st-mute: #7c7c84;
     --st-ink: #f5f5f5;
     --st-hover: #16161c;
-    --st-line-hover: rgba(255, 255, 255, 0.3);
-  }
+    }
 }
 
 .stack__label {
   padding-top: 4px;
   font-family: var(--st-mono);
-  font-size: 8.5px;
+  font-size: 10px;
   font-weight: 500;
   letter-spacing: 0.1em;
   text-transform: uppercase;
@@ -651,9 +645,9 @@ button {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 10px;
-  min-height: 80px;
-  padding: 14px 6px;
+  gap: 12px;
+  min-height: 100px;
+  padding: 16px 6px;
   border: 1px solid var(--st-line);
   border-radius: 16px;
   background: var(--st-canvas);
@@ -666,17 +660,16 @@ button {
 .stack__link:hover,
 .stack__link:focus-visible {
   background: var(--st-hover);
-  border-color: var(--st-line-hover);
   color: var(--st-ink);
   box-shadow: 0 16px 32px -10px rgba(0, 0, 0, 0.18), 0 3px 8px rgba(0, 0, 0, 0.06);
   transform: translateY(-2px);
 }
-.stack__link:focus-visible { outline: 2px solid var(--st-ink); outline-offset: 2px; }
-.stack__link svg { width: 22px; height: 22px; flex: none; }
+.stack__link:focus-visible { outline: none; }
+.stack__link svg { width: 28px; height: 28px; flex: none; }
 
 .stack__name {
   font-family: var(--font);
-  font-size: 11px;
+  font-size: 13px;
   font-weight: 400;
   color: inherit;
   text-align: center;
@@ -684,8 +677,8 @@ button {
 
 @media (min-width: 900px) {
   .stack { padding-top: 96px; }
-  .stack__link { min-height: 88px; }
-  .stack__link svg { width: 24px; height: 24px; }
+  .stack__link { min-height: 110px; }
+  .stack__link svg { width: 30px; height: 30px; }
 }
 
 /* room above the floating dock */
@@ -700,7 +693,7 @@ button {
   gap: 4px 10px;
   margin-top: -6px;
   font-family: "JetBrains Mono", ui-monospace, monospace;
-  font-size: 8.5px;
+  font-size: 10px;
   font-weight: 500;
   letter-spacing: 0.1em;
   text-transform: uppercase;
@@ -716,7 +709,7 @@ button {
 }
 
 .write__heading {
-  font-size: 13.5px;
+  font-size: 15px;
   font-weight: 600;
   line-height: 1.5;
   color: var(--ink);
@@ -724,7 +717,7 @@ button {
 
 .write__body {
   margin-top: 12px;
-  font-size: 13.5px;
+  font-size: 15px;
   font-weight: 300;
   line-height: 1.7;
   color: var(--ink-soft);
@@ -754,9 +747,9 @@ button {
   display: flex;
   align-items: flex-start;
   gap: 16px;
-  padding: 20px;
+  padding: 24px;
   border: 1px solid var(--line);
-  border-radius: 16px;
+  border-radius: 18px;
   background: var(--surface-solid);
   color: inherit;
   box-shadow: 0 10px 24px -8px rgba(0, 0, 0, 0.12), 0 2px 6px rgba(0, 0, 0, 0.05);
@@ -765,23 +758,22 @@ button {
 }
 .write__link:hover,
 .write__link:focus-visible {
-  border-color: var(--ink-mute);
   background: var(--surface-sunk);
   box-shadow: 0 16px 32px -10px rgba(0, 0, 0, 0.18), 0 3px 8px rgba(0, 0, 0, 0.06);
   transform: translateY(-2px);
 }
-.write__link:focus-visible { outline: 2px solid var(--ink); outline-offset: 2px; }
+.write__link:focus-visible { outline: none; }
 
 .write__icon {
   display: grid;
   place-items: center;
   flex: none;
-  width: 40px;
-  height: 40px;
-  border-radius: 10px;
+  width: 48px;
+  height: 48px;
+  border-radius: 12px;
   background: var(--surface-sunk);
 }
-.write__icon img { width: 20px; height: 20px; filter: brightness(0); }
+.write__icon img { width: 24px; height: 24px; filter: brightness(0); }
 :root[data-theme="dark"] .write__icon img { filter: brightness(0) invert(1); }
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme="light"]) .write__icon img { filter: brightness(0) invert(1); }
@@ -809,7 +801,7 @@ button {
 .write__label {
   padding-top: 4px;
   font-family: "JetBrains Mono", ui-monospace, monospace;
-  font-size: 8.5px;
+  font-size: 10px;
   font-weight: 500;
   letter-spacing: 0.1em;
   text-transform: uppercase;
