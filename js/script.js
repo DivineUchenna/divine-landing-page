@@ -1,4 +1,4 @@
-/* Theme toggle, about dialog and toast. Vanilla, no dependencies. */
+/* Theme toggle, avatar upload, copy email and toast. Vanilla, no dependencies. */
 
 (function () {
   'use strict';
@@ -49,79 +49,6 @@
   });
 
   syncToggleLabel();
-
-  /* ---------------------------------------------------------------- about */
-
-  var modal = document.getElementById('aboutModal');
-  var box = modal.querySelector('.modal__box');
-  var openBtn = document.getElementById('aboutOpen');
-  var closeBtn = document.getElementById('aboutClose');
-  var lastFocused = null;
-
-  var FOCUSABLE = 'a[href], button:not([disabled]), input, textarea, select, [tabindex]:not([tabindex="-1"])';
-
-  function openModal() {
-    lastFocused = document.activeElement;
-    modal.hidden = false;
-    // Next frame, so the transition has a starting state to animate from.
-    requestAnimationFrame(function () {
-      modal.classList.add('is-open');
-    });
-    document.body.style.overflow = 'hidden';
-    closeBtn.focus();
-  }
-
-  function closeModal() {
-    modal.classList.remove('is-open');
-    document.body.style.overflow = '';
-    setTimeout(function () {
-      modal.hidden = true;
-    }, 250);
-
-    // Never leave focus stranded on the dialog once it is hidden: if whatever
-    // opened it is not focusable any more, fall back to the trigger.
-    var back = lastFocused;
-    if (!back || back === document.body || typeof back.focus !== 'function') {
-      back = openBtn;
-    }
-    back.focus();
-  }
-
-  openBtn.addEventListener('click', openModal);
-  closeBtn.addEventListener('click', closeModal);
-
-  modal.addEventListener('click', function (event) {
-    if (event.target === modal) closeModal();
-  });
-
-  document.addEventListener('keydown', function (event) {
-    if (modal.hidden) return;
-
-    if (event.key === 'Escape') {
-      closeModal();
-      return;
-    }
-
-    if (event.key !== 'Tab') return;
-
-    // Keep focus inside the dialog while it is open.
-    var items = Array.prototype.filter.call(
-      box.querySelectorAll(FOCUSABLE),
-      function (el) { return el.offsetParent !== null; }
-    );
-    if (!items.length) return;
-
-    var first = items[0];
-    var last = items[items.length - 1];
-
-    if (event.shiftKey && document.activeElement === first) {
-      event.preventDefault();
-      last.focus();
-    } else if (!event.shiftKey && document.activeElement === last) {
-      event.preventDefault();
-      first.focus();
-    }
-  });
 
   /* ---------------------------------------------------------------- avatar */
 

@@ -5,9 +5,9 @@
 /* ---------------------------------------------------------------- tokens */
 
 :root {
-  --canvas-1: #f6f6f4;
-  --canvas-2: #ebebea;
-  --canvas-3: #e2e2df;
+  --canvas-1: #ffffff;
+  --canvas-2: #ffffff;
+  --canvas-3: #ffffff;
 
   --ink: #171717;
   --ink-soft: #525252;
@@ -20,7 +20,6 @@
   --line-soft: rgba(0, 0, 0, 0.05);
 
   --glass: rgba(255, 255, 255, 0.68);
-  --glass-dock: rgba(250, 250, 249, 0.75);
   --glass-edge: rgba(255, 255, 255, 0.85);
 
   --accent: #6d3bf5;
@@ -34,8 +33,6 @@
   --shadow-pill: 0 8px 24px -4px rgba(0, 0, 0, 0.06), 0 0 0 1px rgba(0, 0, 0, 0.05);
   --shadow-card: 0 12px 32px -8px rgba(0, 0, 0, 0.05), 0 0 0 1px rgba(0, 0, 0, 0.04);
   --shadow-lift: 0 24px 48px -12px rgba(0, 0, 0, 0.12), 0 0 0 1px rgba(0, 0, 0, 0.05);
-  --shadow-dock: 0 20px 48px -12px rgba(0, 0, 0, 0.16), 0 2px 6px rgba(0, 0, 0, 0.04),
-    inset 0 1px 0 rgba(255, 255, 255, 0.9);
 
   --font: "Plus Jakarta Sans", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
   --mono: "Space Grotesk", ui-monospace, "SFMono-Regular", monospace;
@@ -47,6 +44,10 @@
   --r-pill: 999px;
 
   --page: 900px;
+  /* Work and Stack share one two-column layout: label left, content right */
+  --col-label: 100px;
+  --col-gap: 36px;
+  --col-body: 480px;
   --gutter: 20px;
 }
 
@@ -68,7 +69,6 @@
     --line-soft: rgba(255, 255, 255, 0.07);
 
     --glass: rgba(22, 22, 28, 0.72);
-    --glass-dock: rgba(22, 22, 28, 0.78);
     --glass-edge: rgba(255, 255, 255, 0.12);
 
     --accent: #a78bfa;
@@ -81,7 +81,6 @@
     --shadow-pill: 0 8px 24px -4px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(255, 255, 255, 0.08);
     --shadow-card: 0 12px 32px -8px rgba(0, 0, 0, 0.45), 0 0 0 1px rgba(255, 255, 255, 0.06);
     --shadow-lift: 0 28px 56px -14px rgba(0, 0, 0, 0.7), 0 0 0 1px rgba(255, 255, 255, 0.09);
-    --shadow-dock: 0 25px 60px -15px rgba(0, 0, 0, 0.65), inset 0 1px 0 rgba(255, 255, 255, 0.15);
   }
 }
 
@@ -101,7 +100,6 @@
   --line-soft: rgba(255, 255, 255, 0.07);
 
   --glass: rgba(22, 22, 28, 0.72);
-  --glass-dock: rgba(22, 22, 28, 0.78);
   --glass-edge: rgba(255, 255, 255, 0.12);
 
   --accent: #a78bfa;
@@ -114,7 +112,6 @@
   --shadow-pill: 0 8px 24px -4px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(255, 255, 255, 0.08);
   --shadow-card: 0 12px 32px -8px rgba(0, 0, 0, 0.45), 0 0 0 1px rgba(255, 255, 255, 0.06);
   --shadow-lift: 0 28px 56px -14px rgba(0, 0, 0, 0.7), 0 0 0 1px rgba(255, 255, 255, 0.09);
-  --shadow-dock: 0 25px 60px -15px rgba(0, 0, 0, 0.65), inset 0 1px 0 rgba(255, 255, 255, 0.15);
 }
 
 /* ---------------------------------------------------------------- base */
@@ -131,7 +128,7 @@ html {
 body {
   margin: 0;
   min-height: 100vh;
-  padding-bottom: 172px;
+  padding-bottom: 72px;
   background: radial-gradient(circle at 50% 15%, var(--canvas-1) 0%, var(--canvas-2) 60%, var(--canvas-3) 100%);
   background-attachment: fixed;
   color: var(--ink);
@@ -286,8 +283,6 @@ button {
 }
 
 .hero__id,
-.hero__lede { position: relative; z-index: 1; }
-
 .hero__id { display: grid; justify-items: center; gap: 18px; }
 
 .avatar {
@@ -313,7 +308,7 @@ button {
 }
 
 .avatar--sm { width: 56px; height: 56px; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2); }
-.avatar--lg { width: 132px; height: 132px; }
+.avatar--lg { width: 96px; height: 96px; }
 
 /* Upload avatar: the whole circle is a label for a hidden file input. */
 .avatar--upload {
@@ -344,24 +339,14 @@ button {
   font-family: var(--font-name);
   /* the name is the hero's focal point now, so it scales with the viewport;
      tracking tightens as it grows, since 0.16em sprawls at display sizes */
-  font-size: clamp(1rem, 3.4vw, 1.45rem);
+  font-size: clamp(0.95rem, 2.6vw, 1.15rem);
   /* 600 in a proportional sans reads at about the weight 500 did in mono */
   font-weight: 600;
   letter-spacing: 0.02em;
   line-height: 1.25;
-  text-transform: uppercase;
+  text-transform: none;
   text-wrap: balance;
   color: var(--ink);
-}
-
-.hero__lede {
-  max-width: 27rem;
-  margin: 26px auto 0;
-  color: var(--ink-soft);
-  font-size: 13.5px;
-  font-weight: 300;
-  line-height: 1.7;
-  text-wrap: pretty;
 }
 
 .btn {
@@ -388,225 +373,24 @@ button {
 
 /* ---------------------------------------------------------------- work */
 
-.work {
-  max-width: var(--page);
+.work,
+.about {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  max-width: calc(var(--col-body) + 2 * var(--gutter));
   margin: 0 auto;
   padding: 96px var(--gutter) 0;
 }
 
-/* ---------------------------------------------------------------- project cards
-   Archival Swiss, matching flowly.org.uk: zero radius, zero shadow, hairline
-   grid, Syne heads, JetBrains Mono labels, #002AFF accent. Scoped to the cards
-   only — the section around them keeps the page's soft styling. */
-
-.cards {
-  --sw-canvas: #ffffff;
-  --sw-sunk: #f4f4f2;
-  --sw-line: #e2e2de;
-  --sw-rule: #1b1b1b;
-  --sw-ink: #000000;
-  --sw-ink-2: #1b1b1b;
-  --sw-mute: #8e8e8a;
-  --sw-accent: #002aff;
-  --sw-mono: "JetBrains Mono", ui-monospace, monospace;
-  --sw-head: "Syne", ui-sans-serif, system-ui, sans-serif;
-
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 0;
-  margin-top: 0;
-}
-
-:root[data-theme="dark"] .cards {
-  --sw-canvas: #0d0d11;
-  --sw-sunk: #141419;
-  --sw-line: rgba(255, 255, 255, 0.14);
-  --sw-rule: rgba(255, 255, 255, 0.5);
-  --sw-ink: #f5f5f5;
-  --sw-ink-2: #d4d4d4;
-  --sw-mute: #7c7c84;
-  --sw-accent: #6b86ff;
-}
-@media (prefers-color-scheme: dark) {
-  :root:not([data-theme="light"]) .cards {
-    --sw-canvas: #0d0d11;
-    --sw-sunk: #141419;
-    --sw-line: rgba(255, 255, 255, 0.14);
-    --sw-rule: rgba(255, 255, 255, 0.5);
-    --sw-ink: #f5f5f5;
-    --sw-ink-2: #d4d4d4;
-    --sw-mute: #7c7c84;
-    --sw-accent: #6b86ff;
-  }
-}
-
-.card {
-  display: flex;
-  flex-direction: column;
-  padding: 30px 26px;
-  /* full border per cell, shared edges pulled together so they stay 1px */
-  border: 1px solid var(--sw-line);
-  margin: -1px 0 0 -1px;
-  background: var(--sw-canvas);
-  color: var(--sw-ink);
-  transition: background-color 0.2s ease;
-}
-.card--live:hover { background: var(--sw-sunk); }
-
-.card__top {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 12px;
-  margin-bottom: 20px;
-}
-
-.tag {
-  display: inline-flex;
-  align-items: center;
-  gap: 7px;
-  padding: 3px 8px;
-  border: 1px solid currentColor;
-  color: var(--sw-mute);
-  font-family: var(--sw-mono);
-  font-size: 8.5px;
-  font-weight: 500;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-}
-.tag__dot { width: 5px; height: 5px; background: currentColor; }
-.tag--brand { color: var(--sw-accent); }
-
-.card__num {
-  font-family: var(--sw-mono);
-  font-size: 8.5px;
-  font-weight: 500;
-  letter-spacing: 0.1em;
-  color: var(--sw-mute);
-}
-
-.card__title {
-  font-family: var(--sw-head);
-  font-size: 15px;
-  font-weight: 700;
-  letter-spacing: -0.01em;
-  line-height: 1.2;
-  text-transform: uppercase;
-  color: var(--sw-ink);
-}
-
-.card__body {
-  margin-top: 12px;
-  color: var(--sw-ink-2);
-  font-family: var(--font-name);
-  font-size: 12px;
-  font-weight: 400;
-  line-height: 1.65;
-  text-wrap: pretty;
-}
-
-.panel {
-  margin-top: 22px;
-  padding: 13px;
-  border: 1px solid var(--sw-line);
-  background: var(--sw-sunk);
-  font-family: var(--sw-mono);
-  font-size: 9.5px;
-}
-
-.panel__row {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-  color: var(--sw-mute);
-}
-.panel__ok { color: var(--sw-accent); font-weight: 700; }
-
-.panel__flow {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 0;
-  margin-top: 12px;
-  border-left: 1px solid var(--sw-line);
-}
-.panel__flow li {
-  padding: 9px 7px;
-  border-right: 1px solid var(--sw-line);
-  border-top: 1px solid var(--sw-line);
-  border-bottom: 1px solid var(--sw-line);
-  background: var(--sw-canvas);
-  color: var(--sw-ink);
-  font-size: 9.5px;
-  line-height: 1.4;
-  text-align: center;
-}
-.panel__flow span {
-  display: block;
-  margin-bottom: 4px;
-  color: var(--sw-mute);
-  font-size: 8px;
-  letter-spacing: 0.12em;
-}
-
-.card__foot {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 12px;
-  align-items: center;
-  justify-content: space-between;
-  margin-top: auto;
-  padding-top: 28px;
-}
-.card .panel + .card__foot { margin-top: 28px; }
-
-.card__meta {
-  font-family: var(--sw-mono);
-  font-size: 8.5px;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: var(--sw-mute);
-}
-
-.card__link {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  padding: 8px 14px;
-  border: 1px solid var(--sw-rule);
-  color: var(--sw-ink);
-  font-family: var(--sw-mono);
-  font-size: 11px;
-  font-weight: 500;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  transition: color 0.2s ease, border-color 0.2s ease;
-}
-.card__link svg { width: 13px; height: 13px; }
-.card__link:hover { color: var(--sw-accent); border-color: var(--sw-accent); }
-
-.card--soon {
-  min-height: 170px;
-  background: var(--sw-sunk);
-}
-.card--soon .card__title,
-.card--soon .card__body { color: var(--sw-mute); }
-
 @media (min-width: 900px) {
-  .work { padding-top: 112px; }
-  .cards { grid-template-columns: repeat(2, 1fr); }
-  .card--live { grid-column: 1 / -1; }
-  .card { padding: 38px 34px; }
-  .card__title { font-size: 18px; }
-  .card__body { font-size: 12.5px; }
+  .work,
+  .about { padding-top: 112px; }
 }
 
 /* ---------------------------------------------------------------- cta buttons
    Matched to the supplied reference: 2px grey rule, soft 6px corner,
    near-white fill, pixel uppercase label. */
 
-.card__link,
 .btn--primary {
   --cta-bg: #fdfcfc;
   --cta-ink: #2e2d2d;
@@ -633,7 +417,6 @@ button {
   transition: border-color 0.2s ease, color 0.2s ease, background-color 0.2s ease;
 }
 
-.card__link:hover,
 .btn--primary:hover {
   border-color: var(--cta-ink);
   color: #000000;
@@ -641,26 +424,22 @@ button {
   opacity: 1;
 }
 
-:root[data-theme="dark"] .card__link,
 :root[data-theme="dark"] .btn--primary {
   --cta-bg: #17171c;
   --cta-ink: #e8e8e8;
   --cta-line: #6f6f76;
 }
-:root[data-theme="dark"] .card__link:hover,
 :root[data-theme="dark"] .btn--primary:hover {
   border-color: #e8e8e8;
   color: #ffffff;
   background: #1f1f26;
 }
 @media (prefers-color-scheme: dark) {
-  :root:not([data-theme="light"]) .card__link,
   :root:not([data-theme="light"]) .btn--primary {
     --cta-bg: #17171c;
     --cta-ink: #e8e8e8;
     --cta-line: #6f6f76;
   }
-  :root:not([data-theme="light"]) .card__link:hover,
   :root:not([data-theme="light"]) .btn--primary:hover {
     border-color: #e8e8e8;
     color: #ffffff;
@@ -668,89 +447,22 @@ button {
   }
 }
 
-/* "Visit Flowlyy" drops the rule and is lifted on a shadow instead. It sits on a
-   white card and is itself near-white, so the shadow is the only thing defining
-   its edge — hence two layers rather than one soft blur. Padding grows by the
-   2px the border gave back, so the button keeps its size. */
-
-.card__link {
-  padding: 9px 15px;
-  border: 0;
-  box-shadow:
-    0 1px 2px rgba(0, 0, 0, 0.12),
-    0 3px 8px rgba(0, 0, 0, 0.10);
-  transition: box-shadow 0.2s ease, transform 0.2s ease, color 0.2s ease,
-    background-color 0.2s ease;
-}
-
-.card__link:hover {
-  transform: translateY(-1px);
-  box-shadow:
-    0 2px 5px rgba(0, 0, 0, 0.14),
-    0 7px 18px rgba(0, 0, 0, 0.13);
-}
-.card__link:active { transform: translateY(0); }
-
-/* On dark, a drop shadow reads as nothing, so the lift comes from the button
-   being lighter than the card behind it. */
-:root[data-theme="dark"] .card__link {
-  --cta-bg: #24242c;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.55);
-}
-:root[data-theme="dark"] .card__link:hover {
-  --cta-bg: #2e2e38;
-  box-shadow: 0 5px 18px rgba(0, 0, 0, 0.65);
-}
-@media (prefers-color-scheme: dark) {
-  :root:not([data-theme="light"]) .card__link {
-    --cta-bg: #24242c;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.55);
-  }
-  :root:not([data-theme="light"]) .card__link:hover {
-    --cta-bg: #2e2e38;
-    box-shadow: 0 5px 18px rgba(0, 0, 0, 0.65);
-  }
-}
-
 /* ---------------------------------------------------------------- dock */
 
 .dock-wrap {
-  position: fixed;
-  bottom: 20px;
-  left: 0; right: 0;
-  z-index: 40;
   display: flex;
   justify-content: center;
-  padding: 0 var(--gutter);
-  pointer-events: none;
+  padding: 40px var(--gutter) 0;
 }
 
-/* Same retro treatment as the top bar: squared corners, no rule, two-layer shadow. */
+/* Just the logos: no bar, no tiles. Plain grey marks that darken on hover. */
 .dock {
-  pointer-events: auto;
   display: inline-flex;
   align-items: center;
-  gap: 7px;
-  padding: 8px 11px;
+  gap: 6px;
+  padding: 0;
   border: 0;
-  border-radius: 8px;
-  background: rgba(255, 255, 255, 0.86);
-  box-shadow:
-    0 1px 2px rgba(0, 0, 0, 0.12),
-    0 3px 10px rgba(0, 0, 0, 0.11);
-  -webkit-backdrop-filter: blur(24px) saturate(180%);
-  backdrop-filter: blur(24px) saturate(180%);
-}
-
-:root[data-theme="dark"] .dock {
-  background: rgba(32, 32, 40, 0.88);
-  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.6);
-}
-@media (prefers-color-scheme: dark) {
-  :root:not([data-theme="light"]) .dock {
-    background: rgba(32, 32, 40, 0.88);
-    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.6);
-  }
+  background: none;
 }
 
 .dock__group {
@@ -759,53 +471,37 @@ button {
   gap: 8px;
 }
 
-.dock__rule {
-  width: 1px;
-  height: 24px;
-  background: var(--line);
-}
-
 .dock__item { position: relative; }
 
 .sq {
   display: grid;
   place-items: center;
-  width: 36px;
-  height: 36px;
-  border-radius: 4px;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.18);
-  transition: transform 0.2s ease;
+  width: 38px;
+  height: 38px;
+  border-radius: 8px;
+  background: none;
+  color: var(--ink-mute);
+  transition: transform 0.2s ease, color 0.2s ease;
 }
-.sq svg { width: 17px; height: 17px; }
-.sq:hover { transform: translateY(-7px) scale(1.05); }
-.sq:active { transform: translateY(-3px) scale(0.96); }
+.sq svg { width: 20px; height: 20px; }
+.sq:hover,
+.sq:focus-visible { color: var(--ink); transform: translateY(-2px); }
+.sq:active { transform: translateY(0); }
 
-/* Dock marks are monochrome: solid squircles that invert with the theme.
-   The Flowlyy mark is an <img>, so it is knocked to flat black or white with a
-   filter rather than a fill. */
-
-.sq {
-  background: #1c1c1e;
-  color: #ffffff;
-}
+/* The Flowlyy mark is an <img>, so it is turned grey with a filter rather than a
+   fill, and goes to full ink on hover. */
 .sq--flowlyy img {
-  width: 21px;
-  height: 21px;
-  filter: brightness(0) invert(1);
+  width: 22px;
+  height: 22px;
+  filter: brightness(0);
+  opacity: 0.5;
+  transition: opacity 0.2s ease;
 }
-
-:root[data-theme="dark"] .sq {
-  background: #f2f2f2;
-  color: #16161c;
-}
-:root[data-theme="dark"] .sq--flowlyy img { filter: brightness(0); }
-
+.sq--flowlyy:hover img,
+.sq--flowlyy:focus-visible img { opacity: 1; }
+:root[data-theme="dark"] .sq--flowlyy img { filter: brightness(0) invert(1); }
 @media (prefers-color-scheme: dark) {
-  :root:not([data-theme="light"]) .sq {
-    background: #f2f2f2;
-    color: #16161c;
-  }
-  :root:not([data-theme="light"]) .sq--flowlyy img { filter: brightness(0); }
+  :root:not([data-theme="light"]) .sq--flowlyy img { filter: brightness(0) invert(1); }
 }
 
 .tip {
@@ -831,160 +527,6 @@ button {
 .sq:focus-visible + .tip {
   opacity: 1;
   transform: translate(-50%, 0);
-}
-
-/* ---------------------------------------------------------------- about */
-
-.modal {
-  position: fixed;
-  inset: 0;
-  z-index: 60;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 16px;
-  background: rgba(0, 0, 0, 0.45);
-  -webkit-backdrop-filter: blur(10px);
-  backdrop-filter: blur(10px);
-  opacity: 0;
-  transition: opacity 0.25s ease;
-}
-.modal[hidden] { display: none; }
-.modal.is-open { opacity: 1; }
-
-.modal__box {
-  position: relative;
-  width: 100%;
-  max-width: 540px;
-  max-height: 88vh;
-  padding: 26px;
-  overflow-y: auto;
-  overscroll-behavior: contain;
-  border: 1px solid var(--line);
-  border-radius: var(--r-lg);
-  background: var(--surface-solid);
-  box-shadow: 0 32px 64px -16px rgba(0, 0, 0, 0.35);
-  transform: scale(0.96);
-  transition: transform 0.25s ease;
-}
-.modal.is-open .modal__box { transform: scale(1); }
-
-.modal__close {
-  position: absolute;
-  top: 20px; right: 20px;
-  display: grid;
-  place-items: center;
-  width: 34px; height: 34px;
-  border-radius: 50%;
-  color: var(--ink-mute);
-  transition: background-color 0.2s ease, color 0.2s ease;
-}
-.modal__close svg { width: 18px; height: 18px; }
-.modal__close:hover { background: rgba(0, 0, 0, 0.06); color: var(--ink); }
-:root[data-theme="dark"] .modal__close:hover { background: rgba(255, 255, 255, 0.09); }
-@media (prefers-color-scheme: dark) {
-  :root:not([data-theme="light"]) .modal__close:hover { background: rgba(255, 255, 255, 0.09); }
-}
-
-.modal__head {
-  display: flex;
-  align-items: center;
-  gap: 14px;
-  padding-right: 40px;
-}
-.modal__name { font-size: 17px; font-weight: 600; letter-spacing: -0.02em; }
-.modal__role {
-  font-family: var(--mono);
-  font-size: 10.5px;
-  color: var(--ink-mute);
-}
-
-.prose { margin-top: 22px; display: grid; gap: 14px; }
-.prose p {
-  color: var(--ink-soft);
-  font-size: 13px;
-  font-weight: 300;
-  line-height: 1.7;
-  text-wrap: pretty;
-}
-.prose strong { color: var(--ink); font-weight: 600; }
-
-.block {
-  margin-top: 26px;
-  padding-top: 22px;
-  border-top: 1px solid var(--line-soft);
-}
-.block__title {
-  margin-bottom: 14px;
-  font-family: var(--mono);
-  font-size: 9.5px;
-  font-weight: 500;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  color: var(--ink-mute);
-}
-
-.grid2 {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 10px;
-}
-.grid2 li {
-  padding: 13px 14px;
-  border: 1px solid var(--line-soft);
-  border-radius: var(--r-md);
-  background: var(--surface-sunk);
-}
-.grid2 strong {
-  display: block;
-  margin-bottom: 3px;
-  font-size: 12.5px;
-  font-weight: 600;
-}
-.grid2 span {
-  color: var(--ink-mute);
-  font-size: 11.5px;
-  line-height: 1.5;
-}
-
-.rows { display: grid; gap: 2px; }
-.rows > div {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 10px;
-  align-items: baseline;
-  justify-content: space-between;
-  padding: 11px 0;
-  border-bottom: 1px solid var(--line-soft);
-}
-.rows > div:last-child { border-bottom: 0; }
-.rows dt { font-size: 12.5px; font-weight: 500; }
-.rows dd {
-  margin: 0;
-  font-family: var(--mono);
-  font-size: 12px;
-  text-align: right;
-}
-.rows dd span {
-  display: block;
-  color: var(--ink-mute);
-  font-size: 10.5px;
-}
-
-.modal__foot {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 14px;
-  align-items: center;
-  justify-content: space-between;
-  margin-top: 26px;
-  padding-top: 22px;
-  border-top: 1px solid var(--line-soft);
-}
-.modal__where {
-  font-family: var(--mono);
-  font-size: 10.5px;
-  color: var(--ink-mute);
 }
 
 /* ---------------------------------------------------------------- toast */
@@ -1021,20 +563,17 @@ button {
 @media (min-width: 640px) {
   :root { --gutter: 28px; }
   .hero { padding-top: 210px; }
-  .sq { width: 40px; height: 40px; border-radius: 4px; }
-  .sq svg { width: 19px; height: 19px; }
-  .dock { gap: 9px; padding: 9px 13px; border-radius: 8px; }
-  .dock__group { gap: 9px; }
-  .grid2 { grid-template-columns: 1fr 1fr; }
-  .modal__box { padding: 30px; }
+  .dock__group { gap: 6px; }
 }
 
 @media (max-width: 380px) {
-  .sq { width: 32px; height: 32px; border-radius: 3px; }
-  .sq svg { width: 15px; height: 15px; }
-  .sq--flowlyy img { width: 19px; height: 19px; }
-  .dock { gap: 5px; padding: 7px 9px; }
-  .dock__group { gap: 6px; }
+  .sq { width: 32px; height: 32px; }
+  .sq svg { width: 18px; height: 18px; }
+  .sq--flowlyy img { width: 20px; height: 20px; }
+  .dock { gap: 3px; }
+  .dock__group { gap: 3px; }
+}
+
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -1059,7 +598,9 @@ button {
   --st-line-hover: #cfcfca;
   --st-mono: "JetBrains Mono", ui-monospace, monospace;
 
-  max-width: var(--page);
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  max-width: calc(var(--col-body) + 2 * var(--gutter));
   margin: 0 auto;
   padding: 72px var(--gutter) 0;
 }
@@ -1086,7 +627,7 @@ button {
 }
 
 .stack__label {
-  margin-bottom: 14px;
+  padding-top: 4px;
   font-family: var(--st-mono);
   font-size: 8.5px;
   font-weight: 500;
@@ -1110,28 +651,32 @@ button {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 14px;
-  min-height: 112px;
-  padding: 20px 8px;
+  gap: 10px;
+  min-height: 80px;
+  padding: 14px 6px;
   border: 1px solid var(--st-line);
   border-radius: 16px;
   background: var(--st-canvas);
   color: var(--st-logo);
   text-decoration: none;
-  transition: background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease;
+  box-shadow: 0 10px 24px -8px rgba(0, 0, 0, 0.12), 0 2px 6px rgba(0, 0, 0, 0.05);
+  transition: background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease,
+    box-shadow 0.2s ease, transform 0.2s ease;
 }
 .stack__link:hover,
 .stack__link:focus-visible {
   background: var(--st-hover);
   border-color: var(--st-line-hover);
   color: var(--st-ink);
+  box-shadow: 0 16px 32px -10px rgba(0, 0, 0, 0.18), 0 3px 8px rgba(0, 0, 0, 0.06);
+  transform: translateY(-2px);
 }
 .stack__link:focus-visible { outline: 2px solid var(--st-ink); outline-offset: 2px; }
-.stack__link svg { width: 28px; height: 28px; flex: none; }
+.stack__link svg { width: 22px; height: 22px; flex: none; }
 
 .stack__name {
   font-family: var(--font);
-  font-size: 12px;
+  font-size: 11px;
   font-weight: 400;
   color: inherit;
   text-align: center;
@@ -1139,12 +684,11 @@ button {
 
 @media (min-width: 900px) {
   .stack { padding-top: 96px; }
-  .stack__link { min-height: 132px; }
-  .stack__link svg { width: 32px; height: 32px; }
+  .stack__link { min-height: 88px; }
+  .stack__link svg { width: 24px; height: 24px; }
 }
 
 /* room above the floating dock */
-.stack { padding-bottom: 140px; }
 
 /* ---------------------------------------------------------------- location
    Small mono line under the name. Same label look as the card numbers. */
@@ -1162,3 +706,141 @@ button {
   text-transform: uppercase;
   color: var(--ink-mute);
 }
+
+/* ---------------------------------------------------------------- work, as writing
+   Plain headings and paragraphs, no boxes. Reuses the page's existing type. */
+
+.write {
+  display: grid;
+  gap: 40px;
+}
+
+.write__heading {
+  font-size: 13.5px;
+  font-weight: 600;
+  line-height: 1.5;
+  color: var(--ink);
+}
+
+.write__body {
+  margin-top: 12px;
+  font-size: 13.5px;
+  font-weight: 300;
+  line-height: 1.7;
+  color: var(--ink-soft);
+  text-wrap: pretty;
+}
+
+.write--soon .write__heading,
+.write--soon .write__body { color: var(--ink-mute); }
+
+/* On dark a black drop shadow disappears, so the stack tiles use a deeper one. */
+:root[data-theme="dark"] .stack__link {
+  box-shadow: 0 12px 28px -8px rgba(0, 0, 0, 0.7), 0 2px 6px rgba(0, 0, 0, 0.4);
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) .stack__link {
+    box-shadow: 0 12px 28px -8px rgba(0, 0, 0, 0.7), 0 2px 6px rgba(0, 0, 0, 0.4);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .stack__link:hover { transform: none; }
+}
+
+/* The Flowlyy block is one clickable tile: icon on the left, title and a short
+   line on the right. Thin border, no shadow. The whole thing links out. */
+
+.write__link {
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+  padding: 20px;
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  background: var(--surface-solid);
+  color: inherit;
+  box-shadow: 0 10px 24px -8px rgba(0, 0, 0, 0.12), 0 2px 6px rgba(0, 0, 0, 0.05);
+  transition: border-color 0.2s ease, background-color 0.2s ease, box-shadow 0.2s ease,
+    transform 0.2s ease;
+}
+.write__link:hover,
+.write__link:focus-visible {
+  border-color: var(--ink-mute);
+  background: var(--surface-sunk);
+  box-shadow: 0 16px 32px -10px rgba(0, 0, 0, 0.18), 0 3px 8px rgba(0, 0, 0, 0.06);
+  transform: translateY(-2px);
+}
+.write__link:focus-visible { outline: 2px solid var(--ink); outline-offset: 2px; }
+
+.write__icon {
+  display: grid;
+  place-items: center;
+  flex: none;
+  width: 40px;
+  height: 40px;
+  border-radius: 10px;
+  background: var(--surface-sunk);
+}
+.write__icon img { width: 20px; height: 20px; filter: brightness(0); }
+:root[data-theme="dark"] .write__icon img { filter: brightness(0) invert(1); }
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) .write__icon img { filter: brightness(0) invert(1); }
+}
+
+.write__text { display: block; min-width: 0; }
+.write__text .write__heading,
+.write__text .write__body { display: block; }
+.write__text .write__body { margin-top: 4px; }
+
+/* On dark a black drop shadow disappears, so the Flowlyy tile uses a deeper one. */
+:root[data-theme="dark"] .write__link {
+  box-shadow: 0 12px 28px -8px rgba(0, 0, 0, 0.7), 0 2px 6px rgba(0, 0, 0, 0.4);
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) .write__link {
+    box-shadow: 0 12px 28px -8px rgba(0, 0, 0, 0.7), 0 2px 6px rgba(0, 0, 0, 0.4);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .write__link:hover { transform: none; }
+}
+
+/* "Work" label: same type as the "Stack" label. */
+.write__label {
+  padding-top: 4px;
+  font-family: "JetBrains Mono", ui-monospace, monospace;
+  font-size: 8.5px;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: #8e8e8a;
+}
+:root[data-theme="dark"] .write__label { color: #7c7c84; }
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) .write__label { color: #7c7c84; }
+}
+
+/* Work and Stack: content is centred on the page. On wide screens the label hangs
+   in the left margin (an empty column of the same width on the right keeps the
+   content dead centre); on narrow screens it sits above the content. */
+.write__label,
+.stack__label { margin-bottom: 14px; padding-top: 0; }
+
+@media (min-width: 860px) {
+  .work,
+  .about,
+  .stack {
+    grid-template-columns: var(--col-label) minmax(0, 1fr) var(--col-label);
+    column-gap: var(--col-gap);
+    max-width: calc(var(--col-body) + 2 * (var(--col-label) + var(--col-gap)) + 2 * var(--gutter));
+  }
+  .write__label,
+  .stack__label { margin-bottom: 0; padding-top: 4px; }
+}
+
+/* breathing room under the last section */
+.stack { padding-bottom: 96px; }
+
+/* About, as writing: a few short paragraphs. */
+.write__prose { display: grid; gap: 14px; }
+.write__prose .write__body { margin-top: 0; }
